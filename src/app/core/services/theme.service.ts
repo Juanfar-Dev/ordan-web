@@ -4,12 +4,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ThemeService {
+  private readonly THEME_KEY = 'app-theme';
+
+  constructor() {
+    this.loadTheme();
+  }
 
   setTheme(theme: string) {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(this.THEME_KEY, theme);
   }
 
   getTheme(): string | null {
-    return document.documentElement.getAttribute('data-theme');
+    return localStorage.getItem(this.THEME_KEY);
+  }
+
+  loadTheme() {
+    const storedTheme = this.getTheme();
+    if (storedTheme) {
+      this.setTheme(storedTheme);
+    }
   }
 }

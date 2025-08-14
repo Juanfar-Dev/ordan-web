@@ -3,3 +3,12 @@
 @plugin "daisyui" {
   themes: light --default , dark --prefersdark , cupcake , bumblebee , emerald , corporate , synthwave , retro , cyberpunk , valentine , halloween , garden , forest , aetherial , dracula ;
 }
+
+
+:root {
+  --border-table-color: #f4f3f3; /* base-300 claro */
+}
+
+html[data-theme='dark'] {
+  --border-table-color: #272e35; /* gris más oscuro para dark */
+}
