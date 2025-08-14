@@ -1,0 +1,11 @@
+<div class="flex relative w-full h-screen">
+  <app-sidebar></app-sidebar>
+  <main class="w-full">
+    <app-header></app-header>
+    <div class="px-6 py-2">
+      <app-breadcrumb></app-breadcrumb>
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+  </main>
+</div>
+
