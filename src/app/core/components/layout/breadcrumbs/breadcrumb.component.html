@@ -1,0 +1,22 @@
+<!-- <div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><a>Home</a></li>
+    <li><a>Documents</a></li>
+    <li>Add Document</li>
+  </ul>
+</div> -->
+
+
+ <nav class="bc text-sm mb-4" aria-label="breadcrumb" *ngIf="breadcrumbs.length">
+      <ol class="bc-list">
+        <li class="bc-item" *ngFor="let bc of breadcrumbs; let last = last; trackBy: trackByUrl">
+          <ng-container *ngIf="!last; else lastTpl">
+            <a [routerLink]="bc.url" class="bc-link">{{ bc.label }}</a>
+            <span class="bc-sep" aria-hidden="true">/</span>
+          </ng-container>
+          <ng-template #lastTpl>
+            <span class="bc-current" aria-current="page">{{ bc.label }}</span>
+          </ng-template>
+        </li>
+      </ol>
+    </nav>

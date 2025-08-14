@@ -1,0 +1,24 @@
+.bc {
+  font-size: 0.9rem;
+}
+.bc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.bc-item {
+  display: inline-flex;
+  align-items: center;
+}
+.bc-link {
+  text-decoration: none;
+}
+.bc-sep {
+  margin: 0 0.25rem;
+}
+.bc-current {
+  font-weight: 600;
+}
