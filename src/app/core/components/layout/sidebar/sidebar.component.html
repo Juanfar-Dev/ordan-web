@@ -1,0 +1,131 @@
+<aside
+  class="flex flex-col justify-between align-center h-screen border-r-2 border-[#F0F0F0] pt-5 pb-1 px-5 absolute w-full right-full transition-all duration-500 ease-in-out sm:relative sm:w-auto sm:right-0"
+  [ngClass]="{ 'bg-[#1d232a]': isDarkMode, 'bg-white': !isDarkMode, 'right-full': !isMenuOpen, 'right-0': isMenuOpen }">
+  <div class="flex justify-center mb-4">
+    @if (isDarkMode) {
+    <img src="/assets/images/ordan_logo_white.svg" alt="" width="155">
+    } @else {
+    <img src="/assets/images/ordan_logo_dark.svg" alt="" width="155">
+    }
+  </div>
+  <hr class="border-neutral-200 my-4">
+  <nav class="flex flex-col justify-between items-center grow h-full">
+    <ul class="menu rounded-box gap-4 text-base">
+      <li [routerLink]="['/home']" routerLinkActive="active">
+        <a>
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              d="M 11.019531 1 A 1.0001 1.0001 0 0 0 10.417969 1.1855469 C 10.417969 1.1855469 6.1162467 4.2605801 4.2578125 5.5878906 C 4.2475427 5.5952122 4.2406299 5.6058418 4.2304688 5.6132812 L 1.40625 7.6953125 A 1.0001 1.0001 0 1 0 2.59375 9.3046875 L 3 9.0058594 L 3 11 L 3 16 L 3 16.929688 C 3 17.598688 3.333625 18.22275 3.890625 18.59375 C 5.166625 19.44475 7.4751406 20.983109 8.4941406 21.662109 C 8.8241406 21.881109 9.212375 22 9.609375 22 L 20.009766 22 C 20.537766 22 21.044969 21.790969 21.417969 21.417969 C 21.790969 21.044969 21.999047 20.537766 21.998047 20.009766 C 21.997047 17.156766 21.997094 12.012187 21.996094 9.8671875 C 21.996094 9.2481875 21.709703 8.6631563 21.220703 8.2851562 C 20.053703 7.3811563 17.980469 5.7773438 17.980469 5.7773438 L 17.980469 5.8046875 C 17.900394 5.7332454 17.832443 5.6509635 17.744141 5.5878906 C 15.885662 4.2612631 11.582031 1.1855469 11.582031 1.1855469 A 1.0001 1.0001 0 0 0 11.019531 1 z M 11 3.2304688 C 11.681684 3.7174894 14.898139 6.0147931 16.582031 7.2167969 C 16.843971 7.4046182 17 7.7058933 17 8.0292969 L 17 16 C 17 16.264591 16.894727 16.519336 16.707031 16.707031 C 16.519336 16.894727 16.264591 17 16 17 L 13 17 L 13 10.980469 C 13 10.720469 12.896891 10.471109 12.712891 10.287109 C 12.528891 10.103109 12.279531 10 12.019531 10 L 9.9804688 10 C 9.7204688 10 9.4711094 10.103109 9.2871094 10.287109 C 9.1031094 10.471109 9 10.720469 9 10.980469 L 9 17 L 6 17 C 5.7354088 17 5.480664 16.894727 5.2929688 16.707031 C 5.1052735 16.519336 5 16.264591 5 16 L 5 8.0292969 C 5 7.7250595 5.1402096 7.4448885 5.375 7.2558594 L 5.5234375 7.1464844 A 1.0001 1.0001 0 0 0 5.5878906 7.0957031 A 1.0001 1.0001 0 0 0 5.6015625 7.0839844 C 7.3218992 5.8553726 10.340373 3.7017367 11 3.2304688 z">
+            </path>
+          </svg>
+          Inicio
+        </a>
+      </li>
+      <li routerLink="/home/invoices" routerLinkActive="active">
+        <a>
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              d="M 5 2 C 3.3550302 2 2 3.3550302 2 5 L 2 17 C 2 17.768584 2.3041249 18.466647 2.7871094 19 L 2.765625 19 C 2.765625 19 4.0799531 20.456844 4.8769531 21.339844 C 5.2559531 21.759844 5.7953281 22 6.3613281 22 L 20 22 C 20.53 22 21.039062 21.789062 21.414062 21.414062 C 21.789062 21.039062 22 20.53 22 20 L 22 11.775391 C 22 11.276391 21.814516 10.795734 21.478516 10.427734 C 20.356206 9.1973789 17.900638 6.5035711 17.765625 6.3554688 A 1.0001 1.0001 0 0 0 17.707031 6.2929688 C 17.706335 6.2922054 17.664062 6.2441406 17.664062 6.2441406 L 17.664062 6.25 L 13.707031 2.2929688 A 1.0001 1.0001 0 0 0 13 2 L 5 2 z M 5 4 L 12.585938 4 L 16 7.4140625 L 16 17 C 16 17.56503 15.56503 18 15 18 L 5 18 C 4.4349698 18 4 17.56503 4 17 L 4 5 C 4 4.4349698 4.4349698 4 5 4 z M 7 6 A 1.0001 1.0001 0 1 0 7 8 L 11 8 A 1.0001 1.0001 0 1 0 11 6 L 7 6 z M 7 10 A 1.0001 1.0001 0 1 0 7 12 L 13 12 A 1.0001 1.0001 0 1 0 13 10 L 7 10 z M 7 14 A 1.0001 1.0001 0 1 0 7 16 L 13 16 A 1.0001 1.0001 0 1 0 13 14 L 7 14 z">
+            </path>
+          </svg>
+          Facturas
+        </a>
+      </li>
+      <li routerLink="/home/accounts" routerLinkActive="active">
+        <a>
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              d="M 6 1 C 5.2045912 1 4.4412111 1.3166015 3.8789062 1.8789062 C 3.3166016 2.441211 3 3.2045912 3 4 L 3 16.826172 C 3 17.362726 3.2295381 17.857663 3.5957031 18.226562 L 3.5722656 18.230469 C 3.5722656 18.230469 5.4222969 20.266703 6.4042969 21.345703 C 6.7832969 21.762703 7.3207656 22 7.8847656 22 L 20 22 C 20.53 22 21.039062 21.789062 21.414062 21.414062 C 21.789062 21.039062 22 20.53 22 20 L 22 9.8085938 C 22 9.2905937 21.799453 8.7929219 21.439453 8.4199219 C 19.778453 6.6989219 15 1.75 15 1.75 L 15 1.7792969 C 14.450776 1.2849906 13.742668 1 13 1 L 6 1 z M 6 3 L 13 3 C 13.264591 3 13.519336 3.1052735 13.707031 3.2929688 C 13.894727 3.4806639 14 3.7354088 14 4 L 14 16.947266 C 12.299043 15.616299 9.8671875 13.712891 9.8671875 13.712891 A 1.0001 1.0001 0 0 0 8.5996094 13.740234 C 8.5996094 13.740234 6.5409604 15.506166 5.0019531 16.826172 C 5.0019531 16.826172 5 16.826172 5 16.826172 L 5 4 C 4.9999969 3.7354088 5.1052735 3.480664 5.2929688 3.2929688 C 5.480664 3.1052734 5.7354088 3 6 3 z">
+            </path>
+          </svg>
+          Cuentas
+        </a>
+      </li>
+    </ul>
+  </nav>
+  @if (isMenuOpen) {
+  <hr class="border-neutral-200 my-4">
+  <div class="flex justify-center items-center gap-8">
+    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+      <div class="p-1">
+        <fa-icon [icon]="faCircleUser" class="text-3xl"></fa-icon>
+      </div>
+    </div>
+    <ul class="menu menu-xs border-l-2 border-solid border-neutral-200 pl-4">
+      <li [routerLink]="['/home/profile']" routerLinkActive="active">
+        <a>
+          <fa-icon [icon]="faUser"></fa-icon>
+          Perfil
+        </a>
+      </li>
+      <li routerLink="/home/settings" routerLinkActive="active">
+        <a>
+          <fa-icon [icon]="faGear"></fa-icon>
+          Ajustes
+        </a>
+      </li>
+      <li>
+        <a>
+          <fa-icon [icon]="faRightFromBracket"></fa-icon>
+          Salir
+        </a>
+      </li>
+    </ul>
+  </div>
+  }
+
+  <hr class="border-neutral-200 my-4">
+  <div class="flex justify-center">
+    <label class="toggle text-base-content">
+      <input type="checkbox" class="theme-controller" [checked]="isDarkMode" (change)="onToggleTheme($event)" />
+      <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </g>
+      </svg>
+      <svg aria-label="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </g>
+      </svg>
+
+    </label>
+
+  </div>
+  <hr class="border-neutral-200 my-4">
+  <div class="text-xs text-neutral-400 italic flex flex-col justify-center items-center mb-4">
+    Powered by:
+    <a href="">
+      <img src="/assets/images/juanfar_logo.png" alt="" width="60">
+    </a>
+  </div>
+  <button class="absolute block sm:hidden" [ngClass]="{ 'right-[30px]': isMenuOpen, 'left-full pl-6': !isMenuOpen }"
+    (click)="onToggleMenu()">
+    <div *ngIf="itemMenuVisible" class="transition-all duration-1000">
+      @if (!isMenuOpen) {
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+      </svg>
+      } @else {
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50"
+        stroke="currentColor">
+        <path
+          d="M 9.15625 6.3125 L 6.3125 9.15625 L 22.15625 25 L 6.21875 40.96875 L 9.03125 43.78125 L 25 27.84375 L 40.9375 43.78125 L 43.78125 40.9375 L 27.84375 25 L 43.6875 9.15625 L 40.84375 6.3125 L 25 22.15625 Z">
+        </path>
+      </svg>
+      }
+    </div>
+  </button>
+</aside>
