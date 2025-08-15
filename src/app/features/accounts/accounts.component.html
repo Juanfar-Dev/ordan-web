@@ -1,0 +1,176 @@
+<div class="overflow-x-auto rounded-lg border border-[var(--border-table-color)]">
+
+  <div class="flex justify-between items-end px-4 pt-4 pb-6">
+    <fieldset class="fieldset p-0">
+      <legend class="fieldset-legend">Ordenar por:</legend>
+      <select class="select">
+        <option>Factura más reciente</option>
+        <option>Factura más antigua</option>
+      </select>
+    </fieldset>
+    <fieldset class="fieldset p-0">
+      <legend class="fieldset-legend">Buscar</legend>
+      <label class="input">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input type="search" class="grow" />
+        <kbd class="kbd kbd-sm">⌘</kbd>
+        <kbd class="kbd kbd-sm">K</kbd>
+      </label>
+    </fieldset>
+
+    <button class="btn btn-success">
+      <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+      Nueva cuenta
+    </button>
+  </div>
+
+  <table class="table border border-t-[var(--border-table-color)]">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th><span class="opacity-50">ID</span></th>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Última factura</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (account of (accounts$ | async); track account) {
+        <tr>
+        <td>
+          <span class="opacity-50">{{ account.account_id }}</span>
+          <span class="sr-only">id de cuenta: {{ account.account_id }}</span>
+        </td>
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <div class="mask mask-squircle h-12 w-12">
+                <img [ngSrc]="account.avatar || ''" alt="Avatar de {{ account.name }}" width="48" height="48" />
+              </div>
+            </div>
+            <div>
+              <div class="font-bold">{{ account.name }}</div>
+              <div class="text-sm opacity-50">{{ account.job_role }}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span class="badge badge-outline" [ngClass]="account.status === true ? 'badge-success' : 'badge-error'">
+            {{ account.status === true ? 'Activa' : 'Inactiva' }}
+          </span>
+          <span class="sr-only">Estado: {{ account.status === true ? 'Activa' : 'Inactiva' }}</span>
+        </td>
+        <td>{{ account.last_invoice_date | date: 'dd-MM-yyyy' }}</td>
+        <th>
+          <button class="btn btn-ghost btn-xs">
+            <fa-icon [icon]="faEye"></fa-icon>
+            <span class="sr-only">Detalles</span>
+            Detalles
+          </button>
+        </th>
+      </tr>
+    }
+      <!-- row 1 -->
+      <!-- <tr>
+        <td>
+          <span class="opacity-50">01J8P3N6</span>
+          <span class="sr-only">id de cuenta: </span>
+        </td>
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <div class="mask mask-squircle h-12 w-12">
+                <img src="assets/images/pixie_services_logo.jpeg" alt="Avatar Tailwind CSS Component" />
+              </div>
+            </div>
+            <div>
+              <div class="font-bold">Pixie</div>
+              <div class="text-sm opacity-50">Arquitectura de Software</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span class="badge badge-error">Inactiva</span>
+          <span class="sr-only">Estado: Inactiva</span>
+        </td>
+        <td>06-05-2025</td>
+        <th>
+          <button class="btn btn-ghost btn-xs">
+            <fa-icon [icon]="faEye"></fa-icon>
+            <span class="sr-only">Detalles</span>
+            Detalles
+          </button>
+        </th>
+      </tr> -->
+      <!-- row 2 -->
+      <!-- <tr>
+        <td class="text-align-center">
+          <span class="opacity-50">5B98B09A</span>
+          <span class="sr-only">id de cuenta: 5B98B09A</span>
+        </td>
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <div class="mask mask-squircle h-12 w-12">
+                <img src="assets/images/accenture_logo.png" alt="Avatar Tailwind CSS Component" />
+              </div>
+            </div>
+            <div>
+              <div class="font-bold">Accenture</div>
+              <div class="text-sm opacity-50">Arquitectura de Software</div>
+            </div>
+          </div>
+        </td>
+        <td class="text-align-center">
+          <span class="badge badge-error">Inactiva</span>
+          <span class="sr-only">Estado: Inactiva</span>
+        </td>
+        <td>06-05-2025</td>
+        <th>
+          <button class="btn btn-ghost btn-xs">
+            <fa-icon [icon]="faEye"></fa-icon>
+            <span class="sr-only">Detalles</span>
+            Detalles
+          </button>
+        </th>
+      </tr> -->
+      <!-- row 3 -->
+      <!-- <tr>
+        <td>
+          <span class="opacity-50">7CA71512</span>
+          <span class="sr-only">id de cuenta: 7CA71512</span>
+        </td>
+        <td>
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <div class="mask mask-squircle h-12 w-12">
+                <img src="assets/images/eviden_logo.webp" alt="Avatar Tailwind CSS Component" />
+              </div>
+            </div>
+            <div>
+              <div class="font-bold">Eviden</div>
+              <div class="text-sm opacity-50">Arquitectura de Software</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span class="badge badge-success">Activa</span>
+          <span class="sr-only">Estado: Activa</span>
+        </td>
+        <td>06-05-2025</td>
+        <th>
+          <button class="btn btn-ghost btn-xs">
+            <fa-icon [icon]="faEye"></fa-icon>
+            <span class="sr-only">Detalles</span>
+            Detalles
+          </button>
+        </th>
+      </tr> -->
+    </tbody>
+  </table>
+</div>
