@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faEye } from '@fortawesome/free-solid-svg-icons';
-import { AccountsService } from './accounts.service';
+import { AccountsService } from '../accounts.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({

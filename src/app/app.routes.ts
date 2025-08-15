@@ -21,13 +21,13 @@ export const routes: Routes = [
         path: 'accounts',
         data: { breadcrumb: 'Cuentas' },
         loadComponent: () =>
-          import('./features/accounts/accounts.component').then(m => m.AccountsComponent),
+          import('./features/accounts/account-list/accounts.component').then(m => m.AccountsComponent),
       },
       {
         path: 'accounts/:id',
         data: { breadcrumb: 'Cuenta Detalle' },
         loadComponent: () =>
-          import('./features/accounts/accounts.component').then(m => m.AccountsComponent),
+          import('./features/accounts/account-list/accounts.component').then(m => m.AccountsComponent),
       },
       {
         path: 'profile',
