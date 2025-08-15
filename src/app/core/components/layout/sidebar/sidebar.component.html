@@ -3,9 +3,9 @@
   [ngClass]="{ 'bg-[#1d232a]': isDarkMode, 'bg-white': !isDarkMode, 'right-full': !isMenuOpen, 'right-0': isMenuOpen }">
   <div class="flex justify-center mb-4">
     @if (isDarkMode) {
-    <img src="/assets/images/ordan_logo_white.svg" alt="" width="155">
+    <img [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/ordan_logo_white.svg'" [alt]="'Ordan Logotipo'" width="155" height="73">
     } @else {
-    <img src="/assets/images/ordan_logo_dark.svg" alt="" width="155">
+    <img [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/ordan_logo_dark.svg'" [alt]="'Ordan Logotipo'" width="155" height="73" priority>
     }
   </div>
   <hr class="border-neutral-200 my-4">
@@ -107,7 +107,7 @@
   <div class="text-xs text-neutral-400 italic flex flex-col justify-center items-center mb-4">
     Powered by:
     <a href="">
-      <img src="/assets/images/juanfar_logo.png" alt="" width="60">
+      <img [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/juanfar_logo.png'" [alt]="'Juanfar Logo'" width="60" height="49">
     </a>
   </div>
   <button class="absolute block sm:hidden" [ngClass]="{ 'right-[30px]': isMenuOpen, 'left-full pl-6': !isMenuOpen }"
