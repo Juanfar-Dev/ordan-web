@@ -1,0 +1,12 @@
+.circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%; /* Esto hace que el div sea un círculo */
+  display: flex; /* Para centrar el contenido */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
+  color: white; /* Color de la letra, puedes ajustarlo */
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 24px; /* Tamaño de la letra */
+}
