@@ -1,0 +1,91 @@
+<div class="border-b border-white/10 pt-8 flex flex-col items-center">
+  <form [formGroup]="accountForm" autocomplete="off" novalidate class="w-2xl">
+    <h2 class="text-base/7 font-semibold">Datos del cliente</h2>
+    <p class="mt-1 text-sm/6 text-gray-400">Pon los datos principales del cliente</p>
+
+    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">Alias (Obligatorio)</legend>
+        <label class="input validator">
+          <input type="text" formControlName="alias" required />
+        </label>
+        @if (accountForm.get('alias')?.errors?.['required'] === true) {
+        <p class="validator-hint py-0 my-0">Campo requerido</p>
+        }
+      </fieldset>
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">Nombre empresa (Obligatorio)</legend>
+        <label class="input validator">
+          <input type="text" formControlName="name" required />
+        </label>
+        @if (accountForm.get('cif')?.errors?.['required'] === true) {
+        <p class="validator-hint py-0 my-0">Campo requerido</p>
+        }
+      </fieldset>
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">CIF (Obligatorio)</legend>
+        <label class="input validator">
+          <input type="text" pattern="^[A-Z][0-9]{7}[0-9A-J]$" formControlName="cif"
+            title="CIF inválido: debe contener 9 caracteres (ejemplo: A12345678)"
+            required />
+        </label>
+        @if (accountForm.get('cif')?.errors?.['required'] === true) {
+        <p class="validator-hint py-0 my-0">Campo requerido</p>
+        } @else {
+        <p class="validator-hint py-0 my-0">CIF inválido: debe contener 9 caracteres (ejemplo: A12345678)</p>
+        }
+      </fieldset>
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">Dirección (Obligatorio)</legend>
+        <label class="input validator">
+          <input type="text" formControlName="address" required />
+        </label>
+        @if (accountForm.get('address')?.errors?.['required'] === true) {
+        <p class="validator-hint py-0 my-0">Campo requerido</p>
+        }
+      </fieldset>
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">Teléfono (Obligatorio)</legend>
+        <label class="input validator">
+          <input type="tel" pattern="^\d{9}$" formControlName="phone"
+            title="Teléfono inválido: debe contener 9 dígitos (ejemplo: 612345678)" required />
+        </label>
+        @if (accountForm.get('phone')?.errors?.['required'] === true) {
+        <p class="validator-hint py-0 my-0">Campo requerido</p>
+        } @else {
+        <p class="validator-hint py-0 my-0">Teléfono inválido: debe contener 9 dígitos (ejemplo: 612345678)</p>
+        }
+      </fieldset>
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">Servicios prestados en el cliente (Obligatorio)</legend>
+        <label class="input validator">
+          <input type="text" formControlName="role" required />
+        </label>
+        @if (accountForm.get('role')?.errors?.['required'] === true) {
+        <p class="validator-hint py-0 my-0">Campo requerido</p>
+        }
+      </fieldset>
+
+      <fieldset class="fieldset sm:col-span-3">
+        <legend class="fieldset-legend">Logo de la empresa (Opcional)</legend>
+        <input type="file" class="file-input" formControlName="avatarFile" (change)="onFileSelected($event)" />
+        <p class="text-xs/5 text-gray-400">Formatos permitidos: PNG, JPG, JPEG, GIF, SVG, WEBP hasta 1MB</p>
+      </fieldset>
+    </div>
+    </form>
+    <div class="flex justify-center gap-2 my-10">
+      <button class="btn btn-outline btn-error" (click)="onDiscard()">
+        Descartar
+      </button>
+      <button class="btn btn-primary" (click)="onCreateAccount()" [disabled]="accountForm.invalid">
+        Crear cuenta
+      </button>
+    </div>
+
+</div>

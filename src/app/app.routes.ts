@@ -29,6 +29,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/accounts/account-list/accounts.component').then(m => m.AccountsComponent),
       },
+       {
+        path: 'new-accounts',
+        data: { breadcrumb: 'Nueva Cuenta' },
+        loadComponent: () =>
+          import('./features/accounts/account-create/account-create.component').then(m => m.AccountCreateComponent),
+      },
       {
         path: 'profile',
         data: { breadcrumb: 'Perfil' },
