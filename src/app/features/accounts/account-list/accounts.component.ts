@@ -3,20 +3,26 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faEye } from '@fortawesome/free-solid-svg-icons';
 import { AccountsService } from '../accounts.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Router } from '@angular/router';
+import { DefaultAvatarComponent } from '../../../shared/components/default-avatar/default-avatar.component';
 
 @Component({
   selector: 'app-accounts',
-  imports: [FontAwesomeModule, CommonModule, NgOptimizedImage],
+  imports: [FontAwesomeModule, CommonModule, NgOptimizedImage, DefaultAvatarComponent],
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.css'
 })
 export class AccountsComponent {
   faPlus = faPlus;
   faEye = faEye;
+  public router = inject(Router);
   public accountsService = inject(AccountsService);
   public accounts: any[] = [];
   public loading = false;
+  // public accounts$ = this.accountsService.getMockAccounts();
   public accounts$ = this.accountsService.getAccounts();
 
-  // El método getAccounts ya no es necesario si usas el async pipe
+  onCreateAccount() {
+    this.router.navigate(['/home/new-accounts']);
+  }
 }
