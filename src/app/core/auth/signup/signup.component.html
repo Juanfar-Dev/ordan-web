@@ -1,0 +1,122 @@
+<div class="border-b border-white/10 flex flex-row py-8 justify-around">
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <form [formGroup]="signupForm" autocomplete="off" novalidate class="w-2xl">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-base/7 font-semibold">Crear Cuenta</h2>
+            <p class="mt-1 text-sm/6 text-gray-400">Crea tu cuenta ingresando los datos solicitados</p>
+          </div>
+          <img
+            [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/ordan_logo_dark.svg'"
+            [alt]="'Ordan Logotipo'" width="155" height="73" priority>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Nombre (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="text" formControlName="name" required />
+            </label>
+            @if (signupForm.get('name')?.invalid) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Apellidos (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="text" formControlName="surname" required />
+            </label>
+            @if (signupForm.get('surname')?.errors?.['required'] === true) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Correo Electrónico (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="email" formControlName="email"
+                required />
+            </label>
+            @if (signupForm.get('email')?.errors?.['required'] === true) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            } @else {
+            <p class="validator-hint py-0 my-0">Correo electrónico inválido</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Dirección (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="text" formControlName="address" required />
+            </label>
+            @if (signupForm.get('address')?.errors?.['required'] === true) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Teléfono (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="tel" pattern="^\d{9}$" formControlName="phone"
+                title="Teléfono inválido: debe contener 9 dígitos (ejemplo: 612345678)" required />
+            </label>
+            @if (signupForm.get('phone')?.errors?.['required'] === true) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            } @else {
+            <p class="validator-hint py-0 my-0">Teléfono inválido: debe contener 9 dígitos (ejemplo: 612345678)</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">NIF (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="text" formControlName="nif" pattern="^[A-Z0-9]{9}$" required />
+            </label>
+            @if (signupForm.get('nif')?.errors?.['required'] === true) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            } @else {
+            <p class="validator-hint py-0 my-0">NIF inválido: debe contener 9 caracteres (ejemplo: 12345678Z)</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Contraseña (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="password" formControlName="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$"
+                required />
+            </label>
+            @if (signupForm.get('password')?.hasError('required')) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            } @else {
+            <p class="validator-hint py-0 my-0">La contraseña debe tener al menos 6 caracteres, incluyendo una letra
+              mayúscula, una letra minúscula y un número.</p>
+            }
+          </fieldset>
+
+          @if (showConfirmPassword) {
+          <fieldset class="fieldset sm:col-span-3">
+            <legend class="fieldset-legend">Confirmar Contraseña (Obligatorio)</legend>
+            <label
+              class="input validator input-validator"
+              [ngClass]="{'border-red-500': signupForm.get('password')?.value !== signupForm.get('confirmPassword')?.value}">
+              <input type="password" formControlName="confirmPassword" required />
+            </label>
+            @if (signupForm.get('password')?.value !== signupForm.get('confirmPassword')?.value) {
+            <p class="text-red-500 py-0 my-0">Las contraseñas no coinciden.</p>
+            }
+          </fieldset>
+          }
+
+        </div>
+        <div class="flex justify-center gap-2 mt-6">
+          <button class="btn btn-primary" (click)="onSignUp()" [disabled]="signupForm.invalid">
+            Crear cuenta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
