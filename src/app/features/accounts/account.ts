@@ -17,8 +17,8 @@ export interface AccountList {
 export const mockAccounts: AccountList = {
   accounts: [
     {
-      account_id: '01J8P3N6',
-      avatar: 'https://api.midominio.com/avatar?name=Juan%20Perez',
+      account_id_short: '01J8P3N6',
+      avatar: '',
       name: 'Account One',
       alias: 'Cuenta de Juan1',
       status: true,
@@ -26,8 +26,8 @@ export const mockAccounts: AccountList = {
       job_role: 'Desarrollador Backend',
     },
     {
-      account_id: '5B98B09A',
-      avatar: 'https://api.midominio.com/avatar?name=Juan%20Perez',
+      account_id_short: '5B98B09A',
+      avatar: '',
       name: 'Account Two',
       alias: 'Cuenta de Juan2',
       status: false,
@@ -35,8 +35,8 @@ export const mockAccounts: AccountList = {
       job_role: 'Desarrollador Backend',
     },
     {
-      account_id: '7CA71512',
-      avatar: 'https://api.midominio.com/avatar?name=Juan%20Perez',
+      account_id_short: '7CA71512',
+      avatar: '',
       name: 'Account Three',
       alias: 'Cuenta de Juan3',
       status: true,

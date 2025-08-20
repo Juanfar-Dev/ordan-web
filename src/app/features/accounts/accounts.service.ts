@@ -1,22 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Account, mockAccounts } from './account';
 import { of } from 'rxjs';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment';
+import { SupabaseService } from '../../core/services/supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountsService {
-  private supabase!: SupabaseClient;
-
-  constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
-  }
+  private SupabaseClient = inject(SupabaseService).supabase;
 
   getMockAccounts() {
     return of([...mockAccounts.accounts]);
@@ -65,7 +56,7 @@ export class AccountsService {
   // Método para obtener todos los registros de la tabla 'accounts'
   async getAccounts(): Promise<any[] | null> {
     try {
-      const { data, error } = await this.supabase
+      const { data, error } = await this.SupabaseClient
         .from('accounts') // Selecciona la tabla
         .select('*'); // Selecciona todas las columnas
 
@@ -89,7 +80,7 @@ export class AccountsService {
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `accounts/${fileName}`;
 
-        const { error: uploadError } = await this.supabase.storage
+        const { error: uploadError } = await this.SupabaseClient.storage
           .from('stg_ordan_avatars')
           .upload(filePath, avatarFile);
 
@@ -98,7 +89,7 @@ export class AccountsService {
         }
 
         // 2. Obtener la URL pública de la imagen
-        const { data: publicUrlData } = this.supabase.storage
+        const { data: publicUrlData } = this.SupabaseClient.storage
           .from('stg_ordan_avatars')
           .getPublicUrl(filePath);
 
@@ -122,7 +113,7 @@ export class AccountsService {
       };
 
       // 4. Llamar a la función de base de datos usando RPC
-      const { data: rpcData, error: rpcError } = await this.supabase.rpc(
+      const { data: rpcData, error: rpcError } = await this.SupabaseClient.rpc(
         'create_account_with_uuid',
         functionBody
       );
@@ -131,7 +122,6 @@ export class AccountsService {
         console.error('Error en la llamada RPC:', rpcError);
         throw rpcError;
       }
-
       return rpcData;
     } catch (error) {
       console.error('Error en el proceso de creación de cuenta:', error);
