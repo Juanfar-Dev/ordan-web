@@ -1,0 +1,53 @@
+<div class="border-b border-white/10 flex flex-row py-8 justify-around items-center h-">
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <form [formGroup]="signinForm" autocomplete="off" novalidate class="w-2xl">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-base/7 font-semibold">Ingresar</h2>
+            <p class="mt-1 text-sm/6 text-gray-400">Ingresa tus datos para acceder a tu cuenta</p>
+          </div>
+          <img
+            [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/ordan_logo_dark.svg'"
+            [alt]="'Ordan Logotipo'" width="155" height="73" priority>
+        </div>
+
+        <div class="mt-10 flex flex-col items-center">
+
+          <fieldset class="fieldset w-1/2">
+            <legend class="fieldset-legend">Correo Electrónico (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="email" formControlName="email"
+                required />
+            </label>
+            @if (signinForm.get('email')?.hasError('required') === true) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            } @else {
+            <p class="validator-hint py-0 my-0">Correo electrónico inválido</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset w-1/2">
+            <legend class="fieldset-legend">Contraseña (Obligatorio)</legend>
+            <label class="input validator">
+              <input type="password" formControlName="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$"
+                required />
+            </label>
+            @if (signinForm.get('password')?.hasError('required')) {
+            <p class="validator-hint py-0 my-0">Campo requerido</p>
+            } @else {
+            <p class="validator-hint py-0 my-0">La contraseña debe tener al menos 6 caracteres, incluyendo una letra
+              mayúscula, una letra minúscula, un número y un carácter especial.</p>
+            }
+          </fieldset>
+
+        </div>
+        <div class="flex justify-center gap-2 mt-2">
+          <button class="btn btn-primary" (click)="onCreateAccount()" [disabled]="signinForm.invalid">
+            Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
