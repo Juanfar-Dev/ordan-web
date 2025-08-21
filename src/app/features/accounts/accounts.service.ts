@@ -2,12 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { Account, mockAccounts } from './account';
 import { of } from 'rxjs';
 import { SupabaseService } from '../../core/services/supabase.service';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountsService {
   private SupabaseClient = inject(SupabaseService).supabase;
+  private authService = inject(AuthService);
 
   getMockAccounts() {
     return of([...mockAccounts.accounts]);
@@ -56,9 +58,11 @@ export class AccountsService {
   // Método para obtener todos los registros de la tabla 'accounts'
   async getAccounts(): Promise<any[] | null> {
     try {
+      const { data: { session } } = await this.authService.session();
       const { data, error } = await this.SupabaseClient
-        .from('accounts') // Selecciona la tabla
-        .select('*'); // Selecciona todas las columnas
+        .from('accounts')
+        .select('*')
+        .eq('user_id', session?.user.id);
 
       if (error) {
         throw error;
@@ -72,6 +76,7 @@ export class AccountsService {
   }
 
   async createAccount(accountData: any, avatarFile: File | null): Promise<any> {
+    const { data: { session } } = await this.authService.session();
     try {
       // 1. Subir la imagen al bucket de Supabase Storage
       let avatarUrl = null;
@@ -110,6 +115,7 @@ export class AccountsService {
         input_address: accountData.address,
         input_phone: accountData.phone,
         input_cif: accountData.cif,
+        input_user_id: session?.user.id
       };
 
       // 4. Llamar a la función de base de datos usando RPC
