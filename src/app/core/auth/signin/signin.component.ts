@@ -48,23 +48,27 @@ export default class SigninComponent {
     });
   }
 
-  onCreateAccount() {
+  async signin() {
     this.signinForm.markAllAsTouched();
     if (this.signinForm.valid) {
       const formData = this.signinForm.value;
-      this.authService
-        .signin(formData)
-        .then((response) => {
-          console.log('User signed in successfully:', response);
-          // Handle successful sign-in (e.g., navigate to a different page)
-          localStorage.setItem('user', JSON.stringify(response.data.user));
-          localStorage.setItem('session', JSON.stringify(response.data.session));
-          this.router.navigate(['/home']);
+      try {
+        const response = await this.authService.signin(formData);
+        if (response.error) {
+          // TO DO: Handle error with user feedback
+          console.error('Error signing in user:', response.error.message);
           this.signinForm.reset();
-        })
-        .catch((error) => {
-          console.error('Error signing in user:', error);
-        });
+          return;
+        }
+        console.log('User signed in successfully:', response);
+        // Handle successful sign-in (e.g., navigate to a different page)
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('session', JSON.stringify(response.data.session));
+        this.signinForm.reset();
+        this.router.navigate(['/']);
+      } catch (error) {
+        console.error('Error signing in user:', error);
+      }
     } else {
       console.error('Form is invalid');
     }

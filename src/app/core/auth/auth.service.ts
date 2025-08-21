@@ -9,6 +9,10 @@ import { UserProfile } from './models/user-profile';
 export class AuthService {
   private SupabaseClient = inject(SupabaseService).supabase;
 
+  session() {
+    return this.SupabaseClient.auth.getSession();
+  }
+
   signup(credentials: SignUpWithPasswordCredentials, userData: UserProfile) {
     return this.SupabaseClient.auth.signUp({
       ...credentials,
