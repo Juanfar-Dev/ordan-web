@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus, faEye } from '@fortawesome/free-solid-svg-icons';
 import { AccountsService } from '../accounts.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DefaultAvatarComponent } from '../../../shared/components/default-avatar/default-avatar.component';
 
 @Component({
@@ -13,16 +13,17 @@ import { DefaultAvatarComponent } from '../../../shared/components/default-avata
   styleUrl: './accounts.component.css'
 })
 export class AccountsComponent {
-  faPlus = faPlus;
-  faEye = faEye;
+  public route = inject(ActivatedRoute);
   public router = inject(Router);
   public accountsService = inject(AccountsService);
   public accounts: any[] = [];
   public loading = false;
-  // public accounts$ = this.accountsService.getMockAccounts();
-  public accounts$ = this.accountsService.getAccounts();
+  public accounts$ = this.accountsService.getMockAccounts();
+  faPlus = faPlus;
+  faEye = faEye;
+  // public accounts$ = this.accountsService.getAccounts();
 
   onCreateAccount() {
-    this.router.navigate(['/home/new-accounts']);
+    this.router.navigate(['new-accounts'], { relativeTo: this.route });
   }
 }

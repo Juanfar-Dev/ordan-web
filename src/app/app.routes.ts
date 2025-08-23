@@ -17,7 +17,12 @@ export const routes: Routes = [
       import('./features/home/home.component').then((m) => m.HomeComponent),
     children: [
       // TO DO: ruta hija por defecto (opcional pero recomendable)
-
+      {
+        path: 'accounts',
+        data: { breadcrumb: 'Cuentas' },
+        loadChildren: () =>
+          import('./features/accounts/accounts.routes').then((m) => m.default),
+      },
       {
         path: 'invoices',
         data: { breadcrumb: 'Facturas' },
@@ -25,30 +30,6 @@ export const routes: Routes = [
           import('./features/invoices/invoices.component').then(
             (m) => m.InvoicesComponent
           ),
-      },
-      {
-        path: 'accounts',
-        data: { breadcrumb: 'Cuentas' },
-        loadComponent: () =>
-          import('./features/accounts/account-list/accounts.component').then(
-            (m) => m.AccountsComponent
-          ),
-      },
-      {
-        path: 'accounts/:id',
-        data: { breadcrumb: 'Cuenta Detalle' },
-        loadComponent: () =>
-          import('./features/accounts/account-list/accounts.component').then(
-            (m) => m.AccountsComponent
-          ),
-      },
-      {
-        path: 'new-accounts',
-        data: { breadcrumb: 'Nueva Cuenta' },
-        loadComponent: () =>
-          import(
-            './features/accounts/account-create/account-create.component'
-          ).then((m) => m.AccountCreateComponent),
       },
       {
         path: 'profile',
