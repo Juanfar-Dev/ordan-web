@@ -134,4 +134,42 @@ export class AccountsService {
       throw error;
     }
   }
+
+  async getAccountById(accountId: string): Promise<any | null> {
+    try {
+      const { data, error } = await this.SupabaseClient
+        .from('accounts')
+        .select('*')
+        .eq('account_id', accountId);
+
+      if (error) {
+        console.error('Error al obtener la cuenta por ID:', error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al obtener la cuenta por ID:', error);
+      return null;
+    }
+  }
+
+  async getAccountByUserId(): Promise<any | null> {
+    try {
+      const { data: { session } } = await this.authService.session();
+      const { data, error } = await this.SupabaseClient
+        .from('accounts')
+        .select('*')
+        .eq('user_id', session?.user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al obtener la cuenta por ID de usuario:', error);
+      return null;
+    }
+  }
 }
