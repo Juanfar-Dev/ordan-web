@@ -1,0 +1,11 @@
+/* Oculta las flechas para Chrome, Edge, Safari */
+.hide-arrows::-webkit-outer-spin-button,
+.hide-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Oculta las flechas para Firefox */
+.hide-arrows {
+  -moz-appearance: textfield;
+}

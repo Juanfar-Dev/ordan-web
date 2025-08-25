@@ -1,0 +1,122 @@
+<div class="border-b border-white/10 pt-8 flex flex-col items-center">
+  <div class="flex flex-col items-center drawer drawer-end">
+    <form [formGroup]="invoiceForm" autocomplete="off" novalidate class="w-2xl">
+      <h2 class="text-base/7 font-semibold">Datos de la factura</h2>
+      <p class="mt-1 text-sm/6 text-gray-400">Pon los datos principales de la factura</p>
+
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">Cuenta (Obligatorio)</legend>
+          <select class="select" formControlName="account_id" required>
+            <option disabled selected>Selecciona una cuenta</option>
+            <option *ngFor="let account of accounts" [value]="account.account_id">{{ account.alias }}</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">Fechas de la factura (Obligatorio)</legend>
+          <label class="input validator">
+            <input type="date" formControlName="submited_at" required />
+          </label>
+          @if (invoiceForm.get('submited_at')?.errors?.['required'] === true) {
+          <p class="validator-hint py-0 my-0">Campo requerido</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">Número de factura (Obligatorio)</legend>
+          <label class="input validator position-relative">
+            <input type="number" formControlName="invoice_number" class="hide-arrows" min="1" max="999" value="1"
+              required />
+            / {{now.year}}
+          </label>
+          @if (invoiceForm.get('invoice_number')?.errors?.['required'] === true) {
+          <p class="validator-hint py-0 my-0">Campo requerido</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">Tarifa por día (Obligatorio)</legend>
+          <label class="input validator">
+            <input type="number" formControlName="rate" class="hide-arrows" min="1" max="999" value="1" required />
+            <span class="currency-symbol">EUR</span>
+          </label>
+          @if (invoiceForm.get('rate')?.errors?.['required'] === true) {
+          <p class="validator-hint py-0 my-0">Campo requerido</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">Cantidad de días (Obligatorio)</legend>
+          <label class="input validator">
+            <input type="number" formControlName="days" min="1" max="999" value="1" required />
+          </label>
+          @if (invoiceForm.get('days')?.errors?.['required'] === true) {
+          <p class="validator-hint py-0 my-0">Campo requerido</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">IVA (Obligatorio)</legend>
+          <label class="input validator">
+            <input type="number" formControlName="iva_percent" class="hide-arrows" min="1" max="999" value="1"
+              required />
+            %
+          </label>
+          @if (invoiceForm.get('iva_percent')?.errors?.['required'] === true) {
+          <p class="validator-hint py-0 my-0">Campo requerido</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">IRPF (Obligatorio)</legend>
+          <label class="input validator">
+            <input type="number" formControlName="irpf_percent" class="hide-arrows" min="1" max="999" value="1"
+              required />
+            %
+          </label>
+          @if (invoiceForm.get('irpf_percent')?.errors?.['required'] === true) {
+          <p class="validator-hint py-0 my-0">Campo requerido</p>
+          }
+        </fieldset>
+
+        @if (invoiceForm.valid) {
+        <fieldset class="fieldset sm:col-span-3">
+          <legend class="fieldset-legend">Aprobar factura</legend>
+          <div class="sm:col-span-3 flex flex-col justify-center items-center gap-4 pb-1">
+            <button class="btn btn-block btn-outline"
+              [ngClass]="{'btn-success': invoiceApproved, 'btn-error': !invoiceApproved}"
+              onclick="invoice_modal.showModal()">
+              <fa-icon [icon]="invoiceButton.icon" class="text-xl"></fa-icon>
+              {{ invoiceButton.label }}
+            </button>
+          </div>
+        </fieldset>
+        }
+      </div>
+    </form>
+
+    @if (invoiceForm.valid) {
+    <dialog id="invoice_modal" class="modal modal-end" #invoice_modal>
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Vista previa de la factura</h3>
+        <app-invoice-template [inputData]="invoiceForm.value"
+          (outputData)="onOutputData($event)"></app-invoice-template>
+        <div class="modal-action">
+        </div>
+      </div>
+    </dialog>
+    }
+  </div>
+
+  <div class="flex justify-center gap-2 my-10">
+    <button class="btn btn-outline btn-error" (click)="onDiscard()">
+      Descartar
+    </button>
+    <button class="btn btn-primary" (click)="onCreateInvoice()" [disabled]="invoiceForm.invalid || !invoiceApproved">
+      Crear factura
+    </button>
+  </div>
+
+</div>
