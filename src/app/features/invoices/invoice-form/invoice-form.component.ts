@@ -6,24 +6,30 @@ import {
   Validators,
 } from '@angular/forms';
 import { InvoicesService } from '../invoices.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AccountsService } from '../../accounts/accounts.service';
 import { CommonModule, NgForOf } from '@angular/common';
 import { InvoiceTemplateComponent } from '../invoice-template/invoice-template.component';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
-
+import { faThumbsUp, faThumbsDown, faEye } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Invoice } from '../invoice';
-
+import { Invoice, NewInvoice } from '../invoice';
 
 @Component({
-  selector: 'app-invoice-create',
-  imports: [ReactiveFormsModule, RouterModule, NgForOf, InvoiceTemplateComponent, FontAwesomeModule, CommonModule],
-  templateUrl: './invoice-create.component.html',
-  styleUrl: './invoice-create.component.css',
+  selector: 'app-invoice-form',
+  imports: [
+    ReactiveFormsModule,
+    RouterModule,
+    NgForOf,
+    InvoiceTemplateComponent,
+    FontAwesomeModule,
+    CommonModule,
+  ],
+  templateUrl: './invoice-form.component.html',
+  styleUrl: './invoice-form.component.css',
 })
-export class InvoiceCreateComponent {
+export class InvoiceFormComponent {
+  public route = inject(ActivatedRoute);
   public invoiceForm!: FormGroup;
   private invoiceService = inject(InvoicesService);
   private accountsService = inject(AccountsService);
@@ -33,16 +39,37 @@ export class InvoiceCreateComponent {
   public faMagnifyingGlass = faMagnifyingGlass;
   public faThumbsUp = faThumbsUp;
   public faThumbsDown = faThumbsDown;
+  public faEye = faEye;
   public accounts: any[] = [];
   public invoiceApproved: boolean = false;
   public invoiceButton = { icon: faThumbsDown, label: 'Factura no aprobada' };
   public invoiceSend: Invoice | null = null;
+  public invoicePreview!: NewInvoice;
+  public invoiceLiterals: { subtitle: string; buttonLabel: string } = {
+    subtitle: 'Ingresa los datos principales de la factura',
+    buttonLabel: 'Crear factura',
+  };
+  public matchedData: boolean = false;
 
   @ViewChild('invoice_modal') invoiceModal!: ElementRef;
 
-
-  ngOnInit() {
+  async ngOnInit() {
     this.initForm();
+    if (this.route.snapshot.paramMap.get('id')) {
+      await this.getInvoiceByIdShort(this.route.snapshot.paramMap.get('id')!);
+      this.matchedData = this.areObjectsEqual(this.invoiceForm.value, this.invoicePreview);
+      if (this.matchedData) {
+        this.invoiceButton = { icon: faEye, label: 'Ver factura' };
+      } else {
+        this.invoiceButton = { icon: faThumbsDown, label: 'Factura no aprobada' };
+      }
+
+      console.log('Matched Data:', this.matchedData);
+      console.log('Current Form Value:', this.invoiceForm.value);
+      console.log('Preview Form Value:', this.invoicePreview);
+
+    }
+    this.formEvents();
     this.getAccountByUserId();
   }
 
@@ -100,6 +127,35 @@ export class InvoiceCreateComponent {
     });
   }
 
+  formEvents() {
+    this.invoiceForm.valueChanges.subscribe((value) => {
+      this.matchedData = this.areObjectsEqual(this.invoiceForm.value, this.invoicePreview);
+      if (this.matchedData) {
+        this.invoiceButton = { icon: faEye, label: 'Ver factura' };
+      } else {
+        this.invoiceButton = { icon: faThumbsDown, label: 'Factura no aprobada' };
+      }
+    });
+  }
+
+  async getInvoiceByIdShort(invoice_id_short: string) {
+    try {
+      const invoicePreview = await this.invoiceService.getInvoiceByIdShort(
+        invoice_id_short
+      );
+      if (invoicePreview) {
+        this.invoiceForm.patchValue(invoicePreview);
+        this.invoicePreview = { ...this.invoiceForm.value };
+        this.invoiceLiterals = {
+          subtitle: 'Revisa los datos de la factura',
+          buttonLabel: 'Actualizar factura',
+        };
+      }
+    } catch (error) {
+      console.error('Error fetching invoice:', error);
+    }
+  }
+
   getAccountByUserId() {
     this.accountsService.getAccountByUserId().then((accounts) => {
       if (accounts) {
@@ -131,7 +187,6 @@ export class InvoiceCreateComponent {
       const invoiceData = this.invoiceSend;
       try {
         const response = await this.invoiceService.createInvoice(invoiceData);
-        console.log('Invoice created successfully:', response);
         this.invoiceForm.reset();
         this.router.navigate(['/home/invoices'], {
           relativeTo: this.router.routerState.root.firstChild,
@@ -150,4 +205,12 @@ export class InvoiceCreateComponent {
       relativeTo: this.router.routerState.root.firstChild,
     });
   }
+
+  private areObjectsEqual = (obj1: NewInvoice, obj2: NewInvoice) => {
+    // The key order must be consistent for this to work correctly.
+    const json1 = JSON.stringify(obj1);
+    const json2 = JSON.stringify(obj2);
+
+    return json1 === json2;
+  };
 }

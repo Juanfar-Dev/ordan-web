@@ -18,10 +18,10 @@ export class AccountsComponent {
   public accountsService = inject(AccountsService);
   public accounts: any[] = [];
   public loading = false;
-  public accounts$ = this.accountsService.getMockAccounts();
   faPlus = faPlus;
   faEye = faEye;
-  // public accounts$ = this.accountsService.getAccounts();
+  // public accounts$ = this.accountsService.getMockAccounts();
+  public accounts$ = this.accountsService.getAccounts();
 
   onCreateAccount() {
     this.router.navigate(['new-accounts'], { relativeTo: this.route });

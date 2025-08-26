@@ -1,43 +1,43 @@
 <div class="invoice-box rounded-xl mb-2">
   <div id="contentToConvert" class="max-w-4xl mx-auto p-6 bg-white text-slate-500 shadow-md mt-10 rounded font-sans">
     <!-- Header -->
-    <div class="border-b pb-8 mt-8 mb-8 flex items-center">
+    <div class="border-b pb-8 mt-8 mb-8 flex items-center text-xs">
       <div class="flex-1 text-left">
         <h2 class="font-semibold text-slate-700">Factura de:</h2>
-        <p class="text-sm text-slate-500">{{ invoiceData?.user?.name }} {{ invoiceData?.user?.surname }}</p>
-        <p class="text-sm text-slate-500">{{ invoiceData?.user?.address }}</p>
-        <p class="text-sm text-slate-500">Email: {{ invoiceData?.user?.email }}</p>
-        <p class="text-sm text-slate-500">Teléfono: {{ invoiceData?.user?.phone }}</p>
-        <p class="text-sm text-slate-500">NIF: {{ invoiceData?.user?.nif }}</p>
+        <p class="text-slate-500">{{ invoiceData?.user?.name }} {{ invoiceData?.user?.surname }}</p>
+        <p class="text-slate-500">{{ invoiceData?.user?.address }}</p>
+        <p class="text-slate-500">Email: {{ invoiceData?.user?.email }}</p>
+        <p class="text-slate-500">Teléfono: {{ invoiceData?.user?.phone }}</p>
+        <p class="text-slate-500">NIF: {{ invoiceData?.user?.nif }}</p>
       </div>
       <h1 class="text-4xl font-bold text-slate-400 uppercase flex-1 text-right">Factura</h1>
     </div>
 
     <div class="pb-4 mb-4 flex items-start">
       <!-- Customer Information -->
-      <div class="mb-4">
+      <div class="mb-4 text-xs">
         <h2 class="font-semibold text-slate-700">Factura a:</h2>
         <p class="text-slate-600">{{ invoiceData?.account?.name }}</p>
-        <p class="text-sm text-slate-500">{{ invoiceData?.account?.address }}</p>
-        <p class="text-sm text-slate-500">Teléfono: {{ invoiceData?.account?.phone }}</p>
-        <p class="text-sm text-slate-500">CIF: {{ invoiceData?.account?.cif }}</p>
+        <p class="text-slate-500">{{ invoiceData?.account?.address }}</p>
+        <p class="text-slate-500">Teléfono: {{ invoiceData?.account?.phone }}</p>
+        <p class="text-slate-500">CIF: {{ invoiceData?.account?.cif }}</p>
         @if (invoiceData?.account?.email) {
-          <p class="text-sm text-slate-500">Email: {{ invoiceData?.account?.email }}</p>
+        <p class="text-slate-500">Email: {{ invoiceData?.account?.email }}</p>
         }
       </div>
 
       <!-- Invoice Information -->
-      <div class="mb-4 text-right flex-1">
-        <p class="text-sm text-slate-500">Factura #: {{ invoiceData?.invoice_number }}/{{ now.year }}</p>
-        <p class="text-sm text-slate-500">Fecha: {{ invoiceData?.submited_at }}</p>
+      <div class="mb-4 text-right flex-1 text-xs">
+        <p class="text-slate-500">Factura #: {{ invoiceData?.invoice_number }}/{{ now.year }}</p>
+        <p class="text-slate-500">Fecha: {{ invoiceData?.submited_at }}</p>
         @if(invoiceData?.due_at) {
-          <p class="text-sm text-slate-500">Fecha de Vencimiento: {{ invoiceData?.due_at }}</p>
+        <p class="text-slate-500">Fecha de Vencimiento: {{ invoiceData?.due_at }}</p>
         }
       </div>
     </div>
 
     <!-- Invoice Table -->
-    <table class="min-w-full table-auto mb-8">
+    <table class="min-w-full table-auto mb-8 text-xs">
       <thead>
         <tr class="bg-slate-100">
           <th class="px-4 py-2 text-left">Servicio</th>
@@ -60,7 +60,7 @@
     </table>
 
     <div class="min-w-full flex justify-end mb-48">
-      <table class="table-auto">
+      <table class="table-auto text-xs">
         <tr>
           <th class="px-4 py-2 text-left"></th>
           <th class="px-4 py-2 text-left"></th>
@@ -86,14 +86,24 @@
 
   </div>
   <div class="flex justify-center items-center gap-4 mt-6">
+    @if (type === 'approve') {
     <button class="btn btn-sm btn-outline btn-error" (click)="discardInvoice()">
-            <fa-icon [icon]="faThumbsDown"></fa-icon>
-            Rechazar factura
-          </button>
-    <button class="btn btn-sm btn-success" (click)="approveInvoice()">
-            <fa-icon [icon]="faThumbsUp"></fa-icon>
-            Aprobar factura
-          </button>
+      <fa-icon [icon]="faThumbsDown"></fa-icon>
+      Rechazar factura
+    </button>
+    <button class="btn btn-sm btn-outline btn-success" (click)="approveInvoice()">
+      <fa-icon [icon]="faThumbsUp"></fa-icon>
+      Aprobar factura
+    </button>
+    } @else {
+    <button class="btn btn-sm btn-outline btn-error" (click)="closeInvoice()">
+      Cerrar vista previa
+    </button>
+    <button class="btn btn-sm btn-outline btn-success" (click)="generatePDF()">
+      <fa-icon [icon]="faDownload"></fa-icon>
+      Descargar factura
+    </button>
+    }
   </div>
 </div>
 

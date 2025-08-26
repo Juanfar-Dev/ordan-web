@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas-pro';
 import { InvoicesService } from '../invoices.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { AccountsService } from '../../accounts/accounts.service';
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsDown, faThumbsUp, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -14,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrl: './invoice-template.component.css',
 })
 export class InvoiceTemplateComponent {
+  @Input() public type: 'preview' | 'approve' = 'preview';
   @Input() public inputData: any = null;
   @Output() public outputData = new EventEmitter<any>();
   @Output() public feedback = new EventEmitter<string>();
@@ -26,6 +27,7 @@ export class InvoiceTemplateComponent {
   public now = this.invoiceService.now();
   public faThumbsDown = faThumbsDown;
   public faThumbsUp = faThumbsUp;
+  public faDownload = faDownload;
 
   async ngOnChanges() {
     if (this.inputData) {
@@ -48,6 +50,10 @@ export class InvoiceTemplateComponent {
     }
   }
 
+  public setInputData(data: any) {
+    this.inputData = data;
+  }
+
   calculateInvoiceData(inputData: any) {
     const subtotal = inputData.days * inputData.rate;
     const iva = subtotal * (inputData.iva_percent / 100);
@@ -68,6 +74,10 @@ export class InvoiceTemplateComponent {
     this.outputData.emit({ feedback: 'discard' });
   }
 
+  closeInvoice() {
+    this.outputData.emit({ feedback: 'close' });
+  }
+
   approveInvoice() {
     this.outputData.emit({ feedback: 'approve', data: this.invoiceData });
   }
@@ -81,9 +91,9 @@ export class InvoiceTemplateComponent {
       const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
+      const fileName = `factura_${this.invoiceData?.invoice_number}_${this.invoiceData?.account?.alias}.pdf`;
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('invoice.pdf');
+      pdf.save(fileName);
     });
   }
 }

@@ -7,7 +7,7 @@ export interface Invoice {
   account_alias: string;      // text
   user_id: string;            // uuid
   submited_at: string;        // date ISO (ej. "2025-08-23")
-  due_at?: string;             // date ISO (ej. "2025-08-23")
+  due_at?: string;            // date ISO (ej. "2025-08-23")
   invoice_number: string;     // text
   rate: number;               // double precision
   days: number;               // double precision
@@ -20,4 +20,4 @@ export interface Invoice {
   total: number;              // double precision
 }
 
-export type NewInvoice = Omit<Invoice, 'id' | 'created_at' | 'updated_at'>;
+export type NewInvoice = Pick<Invoice, 'account_id' | 'days' | 'invoice_number' | 'irpf_percent' | 'rate' | 'submited_at' | 'iva_percent'>;

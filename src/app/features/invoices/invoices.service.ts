@@ -25,6 +25,7 @@ export class InvoicesService {
         input_iva_amount: invoiceData?.iva_amount,
         input_total: invoiceData?.total,
         input_user_id: invoiceData.user_id,
+        input_account_alias: invoiceData.account_alias,
       };
 
       // 1. Llamar a la función de base de datos usando RPC
@@ -41,6 +42,47 @@ export class InvoicesService {
     } catch (error) {
       console.error('Error en el proceso de creación de factura:', error);
       throw error;
+    }
+  }
+
+  async getInvoices() {
+    try {
+      const { data: { session } } = await this.authService.session();
+      console.log(session?.user.id);
+
+      const { data, error } = await this.SupabaseClient
+        .from('invoices')
+        .select('*')
+        .eq('user_id', session?.user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al obtener las facturas:', error);
+      return null;
+    }
+  }
+
+  async getInvoiceByIdShort(invoice_id_short: string) {
+    try {
+      const { data, error } = await this.SupabaseClient
+        .from('invoices')
+        .select('*')
+        .eq('invoice_id_short', invoice_id_short)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al obtener la factura por ID corto:', error);
+      return null;
     }
   }
 
