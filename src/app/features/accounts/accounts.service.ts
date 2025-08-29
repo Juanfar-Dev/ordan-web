@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Account, mockAccounts } from './account';
+import { Account, mockAccounts, NewAccount, UpdateAccount } from './account';
 import { of } from 'rxjs';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { AuthService } from '../../core/auth/auth.service';
@@ -75,7 +75,7 @@ export class AccountsService {
     }
   }
 
-  async createAccount(accountData: any, avatarFile: File | null): Promise<any> {
+  async createAccount(accountData: NewAccount, avatarFile: File | null): Promise<any> {
     const { data: { session } } = await this.authService.session();
     try {
       // 1. Subir la imagen al bucket de Supabase Storage
@@ -105,13 +105,13 @@ export class AccountsService {
       const functionBody = {
         input_avatar: avatarUrl,
         input_status:
-          accountData.status &&
-          (accountData.status === 'false' || accountData.status === false)
+          accountData.status === false ||
+          (typeof accountData.status === 'string' && accountData.status === 'false')
             ? false
             : true,
         input_name: accountData.name,
         input_alias: accountData.alias,
-        input_job_role: accountData.role,
+        input_job_role: accountData.job_role,
         input_address: accountData.address,
         input_phone: accountData.phone,
         input_cif: accountData.cif,
@@ -169,6 +169,45 @@ export class AccountsService {
       return data;
     } catch (error) {
       console.error('Error al obtener la cuenta por ID de usuario:', error);
+      return null;
+    }
+  }
+
+  async getAccountByIdShort(account_id_short: string): Promise<any | null> {
+    try {
+      const { data, error } = await this.SupabaseClient
+        .from('accounts')
+        .select('*')
+        .eq('account_id_short', account_id_short)
+        .single();
+
+      if (error) {
+        console.error('Error al obtener la cuenta por ID corto:', error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al obtener la cuenta por ID corto:', error);
+      return null;
+    }
+  }
+
+  async patchAccount(account_Id: string, accountData: UpdateAccount): Promise<any | null> {
+    try {
+      const { data, error } = await this.SupabaseClient
+        .from('accounts')
+        .update(accountData)
+        .eq('account_id', account_Id);
+
+      if (error) {
+        console.error('Error al actualizar la cuenta:', error);
+        return null;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al actualizar la cuenta:', error);
       return null;
     }
   }

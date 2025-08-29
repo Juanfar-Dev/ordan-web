@@ -19,6 +19,7 @@ import { Invoice } from '../invoice';
 import { InvoiceTemplateComponent } from '../invoice-template/invoice-template.component';
 import html2canvas from 'html2canvas-pro';
 import { jsPDF } from 'jspdf';
+import { map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-invoices',
@@ -37,8 +38,18 @@ export class InvoicesComponent {
   faPencil = faPencil;
   faDownload = faDownload;
   // public invoices$ = this.invoicesService.getMockInvoices();
-  public invoices$ = this.invoicesService.getInvoices();
-  invoiceData: Invoice | null = null;
+  public invoices$ = this.route.queryParamMap.pipe(
+    // Import map and switchMap from rxjs if not already imported
+    map(params => params.get('account_id')),
+    switchMap(accountId =>
+      accountId
+        ? this.invoicesService.getInvoicesByAccountId(accountId)
+        : this.invoicesService.getInvoices()
+        // : this.invoicesService.getMockInvoices()
+    )
+  );
+
+  public invoiceData: Invoice | null = null;
 
   @ViewChild('invoiceContainer') invoiceContainer!: ElementRef;
 

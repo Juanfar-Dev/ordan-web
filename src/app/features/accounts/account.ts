@@ -5,11 +5,17 @@ export interface Account {
   name: string;
   alias: string;
   status: boolean;
+  phone?: string;
   last_invoice_date?: string;
   job_role?: string;
   cif?: string;
   address?: string;
 }
+
+export type NewAccount = Omit<Account, 'account_id' | 'account_id_short' | 'last_invoice_date'>;
+
+export type UpdateAccount = Partial<NewAccount>;
+
 export interface AccountList {
   accounts: Account[];
 }

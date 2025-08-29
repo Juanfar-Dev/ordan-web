@@ -65,9 +65,9 @@
       <fieldset class="fieldset sm:col-span-3">
         <legend class="fieldset-legend">Servicios prestados en el cliente (Obligatorio)</legend>
         <label class="input validator">
-          <input type="text" formControlName="role" required />
+          <input type="text" formControlName="job_role" required />
         </label>
-        @if (accountForm.get('role')?.errors?.['required'] === true) {
+        @if (accountForm.get('job_role')?.errors?.['required'] === true) {
         <p class="validator-hint py-0 my-0">Campo requerido</p>
         }
       </fieldset>
@@ -83,7 +83,7 @@
       <button class="btn btn-outline btn-error" (click)="onDiscard()">
         Descartar
       </button>
-      <button class="btn btn-primary" (click)="onCreateAccount()" [disabled]="accountForm.invalid">
+      <button class="btn btn-primary" (click)="onCreateAccount()" [disabled]="accountForm.invalid || matchedData">
         Crear cuenta
       </button>
     </div>

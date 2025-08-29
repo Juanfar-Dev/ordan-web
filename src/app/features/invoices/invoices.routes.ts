@@ -10,6 +10,14 @@ export default [
       ),
   },
   {
+    path: '?=account_id:id',
+    data: { breadcrumb: '' },
+    loadComponent: () =>
+      import('./invoices-list/invoices.component').then(
+        (m) => m.InvoicesComponent
+      ),
+  },
+  {
     path: 'new-invoice',
     data: { breadcrumb: 'Nueva Factura' },
     loadComponent: () =>

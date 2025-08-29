@@ -63,11 +63,6 @@ export class InvoiceFormComponent {
       } else {
         this.invoiceButton = { icon: faThumbsDown, label: 'Factura no aprobada' };
       }
-
-      console.log('Matched Data:', this.matchedData);
-      console.log('Current Form Value:', this.invoiceForm.value);
-      console.log('Preview Form Value:', this.invoicePreview);
-
     }
     this.formEvents();
     this.getAccountByUserId();

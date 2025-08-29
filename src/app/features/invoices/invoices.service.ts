@@ -86,6 +86,24 @@ export class InvoicesService {
     }
   }
 
+  async getInvoicesByAccountId(account_id: string) {
+    try {
+      const { data, error } = await this.SupabaseClient
+        .from('invoices')
+        .select('*')
+        .eq('account_id', account_id);
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error al obtener facturas por account_id:', error);
+      return null;
+    }
+  }
+
   now() {
     const date = new Date();
     const year = date.getFullYear();

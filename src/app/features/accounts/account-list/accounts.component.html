@@ -36,7 +36,7 @@
         <th><span class="opacity-50">ID</span></th>
         <th>Nombre</th>
         <th>Estado</th>
-        <th>Última factura</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -69,13 +69,19 @@
           </span>
           <span class="sr-only">Estado: {{ account.status === true ? 'Activa' : 'Inactiva' }}</span>
         </td>
-        <td>{{ account.last_invoice_date | date: 'dd-MM-yyyy' }}</td>
         <th>
-          <button class="btn btn-ghost btn-xs">
-            <fa-icon [icon]="faEye"></fa-icon>
-            <span class="sr-only">Detalles</span>
-            Detalles
-          </button>
+          <div class="tooltip" data-tip="Ver detalles">
+            <button class="btn btn-ghost btn-xs" (click)="onViewAccountDetails(account.account_id_short)">
+              <fa-icon [icon]="faEye"></fa-icon>
+              <span class="sr-only">Ver detalles</span>
+            </button>
+          </div>
+          <div class="tooltip" data-tip="Ver facturas">
+            <button class="btn btn-ghost btn-xs" (click)="onViewAccountInvoices(account.account_id)">
+              <fa-icon [icon]="faFileInvoice"></fa-icon>
+              <span class="sr-only">Ver facturas</span>
+            </button>
+          </div>
         </th>
       </tr>
       }

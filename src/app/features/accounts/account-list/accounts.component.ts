@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEye, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { AccountsService } from '../accounts.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,10 +20,19 @@ export class AccountsComponent {
   public loading = false;
   faPlus = faPlus;
   faEye = faEye;
+  faFileInvoice = faFileInvoice;
   // public accounts$ = this.accountsService.getMockAccounts();
   public accounts$ = this.accountsService.getAccounts();
 
   onCreateAccount() {
     this.router.navigate(['new-accounts'], { relativeTo: this.route });
+  }
+
+  onViewAccountDetails(account_id_short: string) {
+    this.router.navigate(['accounts', account_id_short], { relativeTo: this.route });
+  }
+
+  onViewAccountInvoices(account_id: string) {
+    this.router.navigate(['home', 'invoices'], { queryParams: { account_id } });
   }
 }

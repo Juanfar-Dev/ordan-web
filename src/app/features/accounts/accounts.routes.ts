@@ -13,16 +13,16 @@ export default [
     path: 'accounts/:id',
     data: { breadcrumb: 'Cuenta Detalle' },
     loadComponent: () =>
-      import('./account-list/accounts.component').then(
-        (m) => m.AccountsComponent
+      import('./account-form/account-form.component').then(
+        (m) => m.AccountFormComponent
       ),
   },
   {
     path: 'new-accounts',
     data: { breadcrumb: 'Nueva Cuenta' },
     loadComponent: () =>
-      import('./account-create/account-create.component').then(
-        (m) => m.AccountCreateComponent
+      import('./account-form/account-form.component').then(
+        (m) => m.AccountFormComponent
       ),
   },
 ] as Routes;
