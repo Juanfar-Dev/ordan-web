@@ -113,7 +113,15 @@
         </div>
         <div class="flex justify-center gap-2 mt-6">
           <button class="btn btn-primary" (click)="onSignUp()" [disabled]="signupForm.invalid">
-            Crear cuenta
+            @if (isLoading === false) {
+              Crear cuenta
+            } @else {
+              &nbsp;
+              &nbsp;
+              <span class="loading loading-spinner"></span>
+              &nbsp;
+              &nbsp;
+            }
           </button>
         </div>
       </form>

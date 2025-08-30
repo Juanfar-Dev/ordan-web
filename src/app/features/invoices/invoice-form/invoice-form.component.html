@@ -114,8 +114,18 @@
     <button class="btn btn-outline btn-error" (click)="onDiscard()">
       Descartar
     </button>
-    <button class="btn btn-primary" (click)="onCreateInvoice()" [disabled]="invoiceForm.invalid || !invoiceApproved || matchedData">
+
+    <button class="btn btn-primary" (click)="onCreateInvoice()"
+      [disabled]="invoiceForm.invalid || !invoiceApproved || matchedData">
+      @if (isLoading === false) {
       {{ invoiceLiterals.buttonLabel }}
+      } @else {
+      &nbsp;
+      &nbsp;
+      <span class="loading loading-spinner"></span>
+      &nbsp;
+      &nbsp;
+      }
     </button>
   </div>
 

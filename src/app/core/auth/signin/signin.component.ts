@@ -21,6 +21,7 @@ export default class SigninComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   public showConfirmPassword = false;
+  public isLoading = false;
 
   ngOnInit() {
     this.initForm();
@@ -39,38 +40,45 @@ export default class SigninComponent {
         null,
         {
           updateOn: 'change',
-          validators: [
-            Validators.required,
-            Validators.minLength(6),
-          ],
+          validators: [Validators.required, Validators.minLength(6)],
         },
       ],
     });
   }
 
   async signin() {
+    this.isLoading = true;
     this.signinForm.markAllAsTouched();
+
     if (this.signinForm.valid) {
       const formData = this.signinForm.value;
+
       try {
         const response = await this.authService.signin(formData);
+
         if (response.error) {
-          // TO DO: Handle error with user feedback
           console.error('Error signing in user:', response.error.message);
           this.signinForm.reset();
+          this.isLoading = false;
           return;
         }
+
         console.log('User signed in successfully:', response);
-        // Handle successful sign-in (e.g., navigate to a different page)
         localStorage.setItem('user', JSON.stringify(response.data.user));
         localStorage.setItem('session', JSON.stringify(response.data.session));
-        this.signinForm.reset();
         this.router.navigate(['/']);
+        this.signinForm.reset();
+        this.isLoading = false;
+
       } catch (error) {
         console.error('Error signing in user:', error);
+        this.signinForm.reset();
+        this.isLoading = false;
       }
+
     } else {
       console.error('Form is invalid');
+      this.isLoading = false;
     }
   }
 }

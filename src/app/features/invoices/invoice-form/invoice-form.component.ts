@@ -50,6 +50,7 @@ export class InvoiceFormComponent {
     buttonLabel: 'Crear factura',
   };
   public matchedData: boolean = false;
+  public isLoading = false;
 
   @ViewChild('invoice_modal') invoiceModal!: ElementRef;
 
@@ -177,20 +178,26 @@ export class InvoiceFormComponent {
   }
 
   async onCreateInvoice() {
+    this.isLoading = true;
     this.invoiceForm.markAllAsTouched();
+
     if (this.invoiceForm.valid) {
       const invoiceData = this.invoiceSend;
+
       try {
         const response = await this.invoiceService.createInvoice(invoiceData);
         this.invoiceForm.reset();
         this.router.navigate(['/home/invoices'], {
           relativeTo: this.router.routerState.root.firstChild,
         });
+        this.isLoading = false;
       } catch (error) {
         console.error('Error creating invoice:', error);
+        this.isLoading = false;
       }
     } else {
       console.error('Form is invalid');
+      this.isLoading = false;
     }
   }
 

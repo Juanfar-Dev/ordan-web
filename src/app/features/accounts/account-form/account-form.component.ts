@@ -28,6 +28,7 @@ export class AccountFormComponent {
   };
   public accountPreview!: NewAccount;
   public matchedData: boolean = false;
+  public isLoading = false;
 
   async ngOnInit() {
     this.initForm();
@@ -85,22 +86,29 @@ export class AccountFormComponent {
     }
   }
 
-  onCreateAccount() {
+  async onCreateAccount() {
+    this.isLoading = true;
     this.accountForm.markAllAsTouched();
+
     if (this.accountForm.valid) {
       const accountData = this.accountForm.value;
-      this.accountService
-        .createAccount(accountData, this.selectedFile)
-        .then((response: any) => {
-          console.log('Account created successfully:', response);
-          this.accountForm.reset();
-          this.selectedFile = null;
-          this.router.navigate(['/home/accounts'], {
-            relativeTo: this.router.routerState.root.firstChild,
-          });
+
+      try {
+        const response = await this.accountService.createAccount(accountData, this.selectedFile);
+        console.log('Account created successfully:', response);
+        this.accountForm.reset();
+        this.selectedFile = null;
+        this.router.navigate(['/home/accounts'], {
+          relativeTo: this.router.routerState.root.firstChild,
         });
+        this.isLoading = false;
+      } catch (error) {
+        console.error('Error creating account:', error);
+        this.isLoading = false;
+      }
     } else {
       console.error('Form is invalid');
+      this.isLoading = false;
     }
   }
 

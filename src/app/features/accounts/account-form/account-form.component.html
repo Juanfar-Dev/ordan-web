@@ -29,8 +29,7 @@
         <legend class="fieldset-legend">CIF (Obligatorio)</legend>
         <label class="input validator">
           <input type="text" pattern="^[A-Z][0-9]{7}[0-9A-J]$" formControlName="cif"
-            title="CIF inválido: debe contener 9 caracteres (ejemplo: A12345678)"
-            required />
+            title="CIF inválido: debe contener 9 caracteres (ejemplo: A12345678)" required />
         </label>
         @if (accountForm.get('cif')?.errors?.['required'] === true) {
         <p class="validator-hint py-0 my-0">Campo requerido</p>
@@ -78,14 +77,24 @@
         <p class="text-xs/5 text-gray-400">Formatos permitidos: PNG, JPG, JPEG, GIF, SVG, WEBP hasta 1MB</p>
       </fieldset>
     </div>
-    </form>
-    <div class="flex justify-center gap-2 my-10">
-      <button class="btn btn-outline btn-error" (click)="onDiscard()">
-        Descartar
-      </button>
-      <button class="btn btn-primary" (click)="onCreateAccount()" [disabled]="accountForm.invalid || matchedData">
-        Crear cuenta
-      </button>
-    </div>
+  </form>
+  <div class="flex justify-center gap-2 my-10">
+    <button class="btn btn-outline btn-error" (click)="onDiscard()">
+      Descartar
+    </button>
+
+    <button class="btn btn-primary" (click)="onCreateAccount()" [disabled]="accountForm.invalid || matchedData">
+      @if (isLoading === false) {
+      Crear cuenta
+      } @else {
+      &nbsp;
+      &nbsp;
+      <span class="loading loading-spinner"></span>
+      &nbsp;
+      &nbsp;
+      }
+    </button>
+
+  </div>
 
 </div>

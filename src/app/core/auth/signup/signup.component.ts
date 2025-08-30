@@ -21,6 +21,7 @@ export default class SignupComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   public showConfirmPassword = false;
+  public isLoading = false;
 
   ngOnInit() {
     this.initForm();
@@ -104,8 +105,10 @@ export default class SignupComponent {
   }
 
   async onSignUp() {
+    this.isLoading = true;
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
+      this.isLoading = false;
       return;
     }
 
@@ -132,8 +135,12 @@ export default class SignupComponent {
         JSON.stringify(userResponse.data.session)
       );
       this.router.navigate(['/']);
+      this.signupForm.reset();
+      this.isLoading = false;
     } catch (error) {
       console.error('Error during signup:', error);
+      this.signupForm.reset();
+      this.isLoading = false;
     }
   }
 }
