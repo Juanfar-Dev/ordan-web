@@ -3,7 +3,6 @@ import {
   ElementRef,
   inject,
   ViewChild,
-  OnInit,
 } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {

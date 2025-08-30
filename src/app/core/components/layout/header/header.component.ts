@@ -6,16 +6,23 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../../auth/auth.service';
+import { map, Observable, shareReplay } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, FontAwesomeModule, RouterModule],
+  imports: [CommonModule, RouterModule, FontAwesomeModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
+  public user$: Observable<string | null> = this.authService.getUser().pipe(
+    map((user) => user ? `${user.name} ${user.surname}` : ''),
+    shareReplay(1)
+  );
+
   faGear = faGear;
   faUser = faUser;
   faCircleUser = faCircleUser;

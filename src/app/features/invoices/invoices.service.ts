@@ -48,8 +48,6 @@ export class InvoicesService {
   async getInvoices() {
     try {
       const { data: { session } } = await this.authService.session();
-      console.log(session?.user.id);
-
       const { data, error } = await this.SupabaseClient
         .from('invoices')
         .select('*')

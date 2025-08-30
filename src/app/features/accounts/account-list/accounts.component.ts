@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faEye, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEye, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
 import { AccountsService } from '../accounts.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class AccountsComponent {
   public loading = false;
   faPlus = faPlus;
   faEye = faEye;
-  faFileInvoice = faFileInvoice;
+  faFileInvoiceDollar = faFileInvoiceDollar;
   // public accounts$ = this.accountsService.getMockAccounts();
   public accounts$ = this.accountsService.getAccounts();
 
