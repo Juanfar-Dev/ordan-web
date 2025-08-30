@@ -17,11 +17,11 @@ export class AccountsComponent {
   public router = inject(Router);
   public accountsService = inject(AccountsService);
   public accounts: any[] = [];
-  public loading = false;
   faPlus = faPlus;
   faEye = faEye;
   faFileInvoiceDollar = faFileInvoiceDollar;
   // public accounts$ = this.accountsService.getMockAccounts();
+  public isLoading = false;
   public accounts$ = this.accountsService.getAccounts();
 
   onCreateAccount() {

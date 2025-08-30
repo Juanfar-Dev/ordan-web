@@ -1,5 +1,32 @@
 <div class="overflow-x-auto rounded-lg border border-[var(--border-table-color)]">
+  @let accounts = accounts$ | async;
 
+  @if (accounts === null) {
+  <div class="flex flex-col gap-4 px-4 py-4">
+    <div class="flex gap-9">
+      <div class="skeleton h-12 w-full"></div>
+      <div class="skeleton h-12 w-full"></div>
+      <div class="skeleton h-12 w-full"></div>
+    </div>
+    <div class="flex justify-between">
+      <div class="skeleton h-8 w-1/6"></div>
+      <div class="skeleton h-8 w-1/6"></div>
+      <div class="skeleton h-8 w-1/6"></div>
+      <div class="skeleton h-8 w-1/6"></div>
+    </div>
+    <div class="skeleton h-16 w-full"></div>
+    <div class="skeleton h-20 w-full"></div>
+    <div class="skeleton h-20 w-full"></div>
+  </div>
+  }
+
+  @else if (accounts.length === 0) {
+  <div class="flex justify-center py-4">
+    <p class="text-sm opacity-50">No hay cuentas disponibles</p>
+  </div>
+  }
+
+  @else {
   <div class="flex justify-between items-end px-4 pt-4 pb-6">
     <fieldset class="fieldset p-0">
       <legend class="fieldset-legend">Ordenar por:</legend>
@@ -29,6 +56,7 @@
     </button>
   </div>
 
+
   <table class="table border border-t-[var(--border-table-color)]">
     <!-- head -->
     <thead>
@@ -40,7 +68,8 @@
       </tr>
     </thead>
     <tbody>
-      @for (account of (accounts$ | async); track account) {
+
+      @for (account of accounts; track account) {
       <tr>
         <td>
           <span class="opacity-50">{{ account.account_id_short | uppercase }}</span>
@@ -51,9 +80,9 @@
             <div class="avatar">
               <div class="mask mask-squircle h-12 w-12">
                 @if (account.avatar) {
-                  <img [ngSrc]="account.avatar" alt="Avatar de {{ account.alias }}" width="48" height="48" />
+                <img [ngSrc]="account.avatar" alt="Avatar de {{ account.alias }}" width="48" height="48" />
                 } @else {
-                  <app-default-avatar [Letter]="account.alias.charAt(0).toUpperCase()"></app-default-avatar>
+                <app-default-avatar [Letter]="account.alias.charAt(0).toUpperCase()"></app-default-avatar>
                 }
               </div>
             </div>
@@ -87,4 +116,5 @@
       }
     </tbody>
   </table>
+  }
 </div>
