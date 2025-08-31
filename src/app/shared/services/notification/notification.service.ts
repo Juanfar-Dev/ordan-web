@@ -5,18 +5,20 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NotificationService {
+  private modalSubject = new BehaviorSubject<boolean>(false);
+  isModalOpen$ = this.modalSubject.asObservable();
 
-  private notificationsSubject = new BehaviorSubject<{ message: string; type: 'info' | 'success' | 'error' }[]>([]);
+  private notificationsSubject = new BehaviorSubject<{ message: string; style: 'info' | 'success' | 'error' }[]>([]);
   notifications$ = this.notificationsSubject.asObservable();
 
-  updateNotification(message: string, type: 'info' | 'success' | 'error') {
+  updateNotification(message: string, style: 'info' | 'success' | 'error', time: number = 10000) {
     const current = this.notificationsSubject.getValue();
-    const newNotification = { message, type };
+    const newNotification = { message, style };
     this.notificationsSubject.next([...current, newNotification]);
 
     setTimeout(() => {
       const updated = this.notificationsSubject.getValue().filter(n => n !== newNotification);
       this.notificationsSubject.next(updated);
-    }, 10000);
+    }, time);
   }
 }

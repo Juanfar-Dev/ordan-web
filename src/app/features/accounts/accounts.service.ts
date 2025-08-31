@@ -3,6 +3,7 @@ import { Account, mockAccounts, NewAccount, UpdateAccount } from './account';
 import { of } from 'rxjs';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { NotificationService } from '../../shared/services/notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { AuthService } from '../../core/auth/auth.service';
 export class AccountsService {
   private SupabaseClient = inject(SupabaseService).supabase;
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
 
   getMockAccounts() {
     return of([...mockAccounts.accounts]);
@@ -131,6 +133,7 @@ export class AccountsService {
       return rpcData;
     } catch (error) {
       console.error('Error en el proceso de creación de cuenta:', error);
+      this.notificationService.updateNotification(`<strong>Error al crear la cuenta:</strong> ${(error as { details: string }).details}`, 'error', 15000);
       throw error;
     }
   }

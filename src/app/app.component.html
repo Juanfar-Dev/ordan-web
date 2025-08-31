@@ -1,1 +1,13 @@
 <router-outlet #outlet="outlet"></router-outlet>
+
+<div class="toast toast-top toast-center">
+  @for (notification of (notifications$ | async); track $index) {
+  <div [@fadeInOut] [ngClass]="{
+        'alert-success': notification.style === 'success',
+        'alert-error': notification.style === 'error',
+        'alert-info': notification.style === 'info'
+      }" class="mb-2 alert alert-soft">
+    <span [innerHTML]="notification.message"></span>
+  </div>
+  }
+</div>

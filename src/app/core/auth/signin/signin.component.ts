@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../../shared/services/notification/notification.service';
 
 @Component({
   selector: 'app-signin',
@@ -20,6 +21,7 @@ export default class SigninComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
   public showConfirmPassword = false;
   public isLoading = false;
 
@@ -50,34 +52,34 @@ export default class SigninComponent {
     this.isLoading = true;
     this.signinForm.markAllAsTouched();
 
-    if (this.signinForm.valid) {
-      const formData = this.signinForm.value;
+    if (this.signinForm.invalid) {
+      this.signinForm.markAllAsTouched();
+      this.isLoading = false;
+      return;
+    }
 
-      try {
-        const response = await this.authService.signin(formData);
+    const formData = this.signinForm.value;
 
-        if (response.error) {
-          console.error('Error signing in user:', response.error.message);
-          this.signinForm.reset();
-          this.isLoading = false;
-          return;
-        }
+    try {
+      const response = await this.authService.signin(formData);
 
-        console.log('User signed in successfully:', response);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        localStorage.setItem('session', JSON.stringify(response.data.session));
-        this.router.navigate(['/']);
+      if (response.error) {
+        console.error('Error signing in user:', response.error.message);
         this.signinForm.reset();
         this.isLoading = false;
-
-      } catch (error) {
-        console.error('Error signing in user:', error);
-        this.signinForm.reset();
-        this.isLoading = false;
+        this.notificationService.updateNotification(`<strong>Error al acceder:</strong> ${response.error.message}`,'error', 15000);
+        return;
       }
 
-    } else {
-      console.error('Form is invalid');
+      console.log('User signed in successfully:', response);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('session', JSON.stringify(response.data.session));
+      this.router.navigate(['/']);
+      this.signinForm.reset();
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Error signing in user:', error);
+      this.signinForm.reset();
       this.isLoading = false;
     }
   }

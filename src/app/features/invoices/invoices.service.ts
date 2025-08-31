@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '../../core/auth/auth.service';
 import { SupabaseService } from '../../core/services/supabase.service';
+import { NotificationService } from '../../shared/services/notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,7 @@ import { SupabaseService } from '../../core/services/supabase.service';
 export class InvoicesService {
   private authService = inject(AuthService);
   private SupabaseClient = inject(SupabaseService).supabase;
+  private notificationService = inject(NotificationService);
 
   async createInvoice(invoiceData: any | null): Promise<any> {
     try {
@@ -41,6 +43,7 @@ export class InvoicesService {
       return rpcData;
     } catch (error) {
       console.error('Error en el proceso de creación de factura:', error);
+      this.notificationService.updateNotification(`<strong>Error al crear la factura:</strong> ${(error as { details: string }).details}`, 'error', 15000);
       throw error;
     }
   }

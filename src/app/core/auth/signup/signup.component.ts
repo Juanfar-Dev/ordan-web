@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../../shared/services/notification/notification.service';
 
 @Component({
   selector: 'app-signup',
@@ -20,6 +21,7 @@ export default class SignupComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
   public showConfirmPassword = false;
   public isLoading = false;
 
@@ -127,13 +129,19 @@ export default class SignupComponent {
     };
 
     try {
-      const userResponse = await this.authService.signup(credentials, userData);
-      console.log('User signed up successfully:', userResponse);
-      localStorage.setItem('user', JSON.stringify(userResponse.data.user));
-      localStorage.setItem(
-        'session',
-        JSON.stringify(userResponse.data.session)
-      );
+      const response = await this.authService.signup(credentials, userData);
+
+      if (response.error) {
+        console.error('Error signing up user:', response.error.message);
+        this.signupForm.reset();
+        this.isLoading = false;
+        this.notificationService.updateNotification(`<strong>Error al registrarse:</strong> ${response.error.message}`,'error', 15000);
+        return;
+      }
+
+      console.log('User signed up successfully:', response);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('session',JSON.stringify(response.data.session));
       this.router.navigate(['/']);
       this.signupForm.reset();
       this.isLoading = false;

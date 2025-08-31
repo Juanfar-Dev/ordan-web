@@ -26,8 +26,8 @@ export class AuthService {
     });
   }
 
-  signup(credentials: SignUpWithPasswordCredentials, userData: UserProfile) {
-    return this.SupabaseClient.auth.signUp({
+  async signup(credentials: SignUpWithPasswordCredentials, userData: UserProfile) {
+    return await this.SupabaseClient.auth.signUp({
       ...credentials,
       options: {
         data: {
@@ -37,12 +37,12 @@ export class AuthService {
     });
   }
 
-  signin(credentials: SignInWithPasswordCredentials) {
-    return this.SupabaseClient.auth.signInWithPassword(credentials);
+  async signin(credentials: SignInWithPasswordCredentials) {
+    return await this.SupabaseClient.auth.signInWithPassword(credentials);
   }
 
-  signout() {
-    return this.SupabaseClient.auth.signOut();
+  async signout() {
+    return await this.SupabaseClient.auth.signOut();
   }
 }
 
