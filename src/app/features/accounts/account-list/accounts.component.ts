@@ -32,7 +32,7 @@ export class AccountsComponent {
     this.router.navigate(['accounts', account_id_short], { relativeTo: this.route });
   }
 
-  onViewAccountInvoices(account_id: string) {
-    this.router.navigate(['home', 'invoices'], { queryParams: { account_id } });
+  onViewAccountInvoices(account_id: string, alias: string) {
+    this.router.navigate(['home', 'invoices'], { queryParams: { account_id, account_name: alias } });
   }
 }

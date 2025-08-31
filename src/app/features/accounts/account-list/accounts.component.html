@@ -3,10 +3,10 @@
 
   @if (accounts === null) {
   <div class="flex flex-col gap-4 px-4 py-4">
-    <div class="flex gap-9">
-      <div class="skeleton h-12 w-full"></div>
-      <div class="skeleton h-12 w-full"></div>
-      <div class="skeleton h-12 w-full"></div>
+    <div class="flex justify-between">
+      <div class="skeleton h-12 w-1/5"></div>
+      <div class="skeleton h-12 w-1/5"></div>
+      <div class="skeleton h-12 w-1/5"></div>
     </div>
     <div class="flex justify-between">
       <div class="skeleton h-8 w-1/6"></div>
@@ -21,8 +21,12 @@
   }
 
   @else if (accounts.length === 0) {
-  <div class="flex justify-center py-4">
+  <div class="flex flex-col justify-center items-center gap-10 py-12">
     <p class="text-sm opacity-50">No hay cuentas disponibles</p>
+     <button class="btn btn-success" (click)="onCreateAccount()">
+      <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+      Nueva cuenta
+    </button>
   </div>
   }
 
@@ -64,6 +68,7 @@
         <th><span class="opacity-50">ID</span></th>
         <th>Nombre</th>
         <th>Estado</th>
+        <th>Fecha última factura</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -98,6 +103,10 @@
           </span>
           <span class="sr-only">Estado: {{ account.status === true ? 'Activa' : 'Inactiva' }}</span>
         </td>
+        <td>
+          <span class="opacity-50">{{ account.last_invoice_date | date: 'dd-MM-yyyy' }}</span>
+          <span class="sr-only">Última factura: {{ account.last_invoice_date | date: 'dd-MM-yyyy' }}</span>
+        </td>
         <th>
           <div class="tooltip" data-tip="Ver detalles">
             <button class="btn btn-ghost btn-xs" (click)="onViewAccountDetails(account.account_id_short)">
@@ -106,7 +115,7 @@
             </button>
           </div>
           <div class="tooltip" data-tip="Ver facturas">
-            <button class="btn btn-ghost btn-xs" (click)="onViewAccountInvoices(account.account_id)">
+            <button class="btn btn-ghost btn-xs" (click)="onViewAccountInvoices(account.account_id, account.alias)">
               <fa-icon [icon]="faFileInvoiceDollar"></fa-icon>
               <span class="sr-only">Ver facturas</span>
             </button>

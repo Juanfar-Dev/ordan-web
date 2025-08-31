@@ -1,9 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faPlus,
@@ -36,22 +31,24 @@ export class InvoicesComponent {
   faEye = faEye;
   faPencil = faPencil;
   faDownload = faDownload;
+  public account_literal = 'No hay facturas disponibles.';
   // public invoices$ = this.invoicesService.getMockInvoices();
   public invoices$ = this.route.queryParamMap.pipe(
     // Import map and switchMap from rxjs if not already imported
-    map(params => params.get('account_id')),
-    switchMap(accountId =>
-      accountId
-        ? this.invoicesService.getInvoicesByAccountId(accountId)
-        : this.invoicesService.getInvoices()
-        // : this.invoicesService.getMockInvoices()
-    )
+    map((params) => [params.get('account_id'), params.get('account_name')]),
+    switchMap(([accountId, accountName]) => {
+      if (accountId) {
+        this.account_literal = `No hay facturas disponibles para la cuenta <strong>${accountName}</strong>.`;
+        return this.invoicesService.getInvoicesByAccountId(accountId);
+      } else {
+        return this.invoicesService.getInvoices();
+      }
+    })
   );
 
   public invoiceData: Invoice | null = null;
 
   @ViewChild('invoiceContainer') invoiceContainer!: ElementRef;
-
 
   onCreateInvoice() {
     this.router.navigate(['new-invoice'], { relativeTo: this.route });
