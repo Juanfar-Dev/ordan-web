@@ -8,6 +8,7 @@ import {
 import { AccountsService } from '../accounts.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NewAccount } from '../account';
+import { NotificationService } from '../../../shared/services/notification/notification.service';
 
 @Component({
   selector: 'app-account-form',
@@ -29,6 +30,7 @@ export class AccountFormComponent {
   public accountPreview!: NewAccount;
   public matchedData: boolean = false;
   public isLoading = false;
+  public notificationService = inject(NotificationService);
 
   async ngOnInit() {
     this.initForm();
@@ -102,6 +104,7 @@ export class AccountFormComponent {
           relativeTo: this.router.routerState.root.firstChild,
         });
         this.isLoading = false;
+        this.notificationService.updateNotification('Cuenta creada con éxito', 'success');
       } catch (error) {
         console.error('Error creating account:', error);
         this.isLoading = false;

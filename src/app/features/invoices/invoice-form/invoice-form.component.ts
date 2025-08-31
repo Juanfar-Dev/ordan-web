@@ -14,6 +14,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp, faThumbsDown, faEye } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Invoice, NewInvoice } from '../invoice';
+import { NotificationService } from '../../../shared/services/notification/notification.service';
 
 @Component({
   selector: 'app-invoice-form',
@@ -51,6 +52,7 @@ export class InvoiceFormComponent {
   };
   public matchedData: boolean = false;
   public isLoading = false;
+  public notificationService = inject(NotificationService);
 
   @ViewChild('invoice_modal') invoiceModal!: ElementRef;
 
@@ -186,11 +188,13 @@ export class InvoiceFormComponent {
 
       try {
         const response = await this.invoiceService.createInvoice(invoiceData);
+        console.log('Invoice created successfully:', response);
         this.invoiceForm.reset();
         this.router.navigate(['/home/invoices'], {
           relativeTo: this.router.routerState.root.firstChild,
         });
         this.isLoading = false;
+        this.notificationService.updateNotification('Factura creada con éxito', 'success');
       } catch (error) {
         console.error('Error creating invoice:', error);
         this.isLoading = false;

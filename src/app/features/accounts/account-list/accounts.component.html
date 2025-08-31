@@ -50,7 +50,7 @@
       </label>
     </fieldset>
 
-    <button class="btn btn-success" (click)="onCreateAccount()">
+    <button class="btn btn-outline btn-success" (click)="onCreateAccount()">
       <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
       Nueva cuenta
     </button>
@@ -93,7 +93,7 @@
           </div>
         </td>
         <td>
-          <span class="badge badge-outline" [ngClass]="account.status === true ? 'badge-success' : 'badge-error'">
+          <span class="badge" [ngClass]="account.status === true ? 'badge-success' : 'badge-error'">
             {{ account.status === true ? 'Activa' : 'Inactiva' }}
           </span>
           <span class="sr-only">Estado: {{ account.status === true ? 'Activa' : 'Inactiva' }}</span>
