@@ -1,19 +1,17 @@
-<div class="border-b border-white/10 flex flex-row py-8 justify-around items-center h-">
+<div class="border-b border-white/10 flex flex-col py-8 justify-center items-center h-screen">
+  <div class="flex justify-between items-center mb-4">
+    <img
+      [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/ordan_logo_dark.svg'"
+      [alt]="'Ordan Logotipo'" width="155" height="73" priority>
+  </div>
   <div class="card bg-base-100 shadow-sm">
     <div class="card-body">
       <form [formGroup]="signinForm" autocomplete="off" novalidate class="w-2xl">
-        <div class="flex justify-between items-center">
-          <div>
-            <h2 class="text-base/7 font-semibold">Ingresar</h2>
-            <p class="mt-1 text-sm/6 text-gray-400">Ingresa tus datos para acceder a tu cuenta</p>
-          </div>
-          <img
-            [ngSrc]="'https://eixzlkeekabzogbzfgbr.supabase.co/storage/v1/object/public/stg_ordan_avatars/ordan_logo_dark.svg'"
-            [alt]="'Ordan Logotipo'" width="155" height="73" priority>
+        <div class="flex flex-col justify-center items-center">
+          <h2 class="text-base/7 font-semibold">Ingresar</h2>
+          <p class="mt-1 text-sm/6 text-gray-400">Ingresa tus datos para acceder a tu cuenta</p>
         </div>
-
         <div class="mt-10 flex flex-col items-center">
-
           <fieldset class="fieldset w-1/2">
             <legend class="fieldset-legend">Correo Electrónico (Obligatorio)</legend>
             <label class="input validator">
@@ -44,17 +42,20 @@
         <div class="flex justify-center gap-2 mt-2">
           <button class="btn btn-primary" (click)="signin()" [disabled]="signinForm.invalid">
             @if (isLoading === false) {
-              Ingresar
+            Ingresar
             } @else {
-              &nbsp;
-              &nbsp;
-              <span class="loading loading-spinner"></span>
-              &nbsp;
-              &nbsp;
+            &nbsp;
+            &nbsp;
+            <span class="loading loading-spinner"></span>
+            &nbsp;
+            &nbsp;
             }
           </button>
         </div>
       </form>
+    </div>
+     <div class="flex justify-center items-center gap-1 my-4">
+      <small>¿No tienes una cuenta? <a routerLink="/auth/signup" class="link">Crear cuenta</a> </small>
     </div>
   </div>
 </div>
