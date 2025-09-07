@@ -46,3 +46,4 @@ yarn.lock
 
 # Environment files
 /src/environments/**
+.env
