@@ -1,4 +1,7 @@
 <form [formGroup]="profileForm" autocomplete="off" class="flex flex-col items-center justify-center" novalidate>
+  <h2 class="text-base/7 font-semibold">Datos del perfil</h2>
+      <p class="mt-1 text-sm/6 text-gray-400">Actualiza tu información personal</p>
+
   <div class="mt-10 flex flex-wrap gap-8 justify-center">
     <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
       <legend class="fieldset-legend">Nombre</legend>
@@ -67,32 +70,6 @@
       <p class="validator-hint py-0 my-0">ejemplo: 12345678Z</p>
       }
     </fieldset>
-
-    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
-      <legend class="fieldset-legend">Contraseña</legend>
-      <label class="input validator w-full">
-        <input type="password" formControlName="password"
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$" required />
-      </label>
-      @if (profileForm.get('password')?.hasError('required')) {
-      <p class="validator-hint py-0 my-0">Campo requerido</p>
-      } @else {
-      <p class="validator-hint py-0 my-0">La contraseña debe tener al menos 6 caracteres, incluyendo una letra
-        mayúscula, una letra minúscula y un número.</p>
-      }
-    </fieldset>
-
-    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
-      <legend class="fieldset-legend">Confirmar Contraseña</legend>
-      <label class="input validator w-full"
-        [ngClass]="{'border-red-500': profileForm.get('password')?.value !== profileForm.get('confirmPassword')?.value}">
-        <input type="password" formControlName="confirmPassword" required />
-      </label>
-      @if (profileForm.get('password')?.value !== profileForm.get('confirmPassword')?.value) {
-      <p class="text-red-500 py-0 my-0">Las contraseñas no coinciden.</p>
-      }
-    </fieldset>
-
 
   </div>
 

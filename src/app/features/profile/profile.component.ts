@@ -93,21 +93,7 @@ export class ProfileComponent implements OnInit {
             Validators.pattern('^[A-Z0-9]{9}$'),
           ],
         },
-      ],
-      password: [
-        null,
-        {
-          updateOn: 'change',
-          validators: [Validators.required, Validators.minLength(6)],
-        },
-      ],
-      confirmPassword: [
-        null,
-        {
-          updateOn: 'change',
-          validators: [Validators.required, Validators.minLength(6)],
-        },
-      ],
+      ]
     });
   }
 
