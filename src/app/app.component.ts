@@ -12,4 +12,9 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   private notificationService = inject(NotificationService);
   public notifications$ = this.notificationService.notifications$;
+  public progressValue = 100;
+
+  removeNotification(index: number) {
+    this.notificationService.removeNotification(index);
+  }
 }
