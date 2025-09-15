@@ -23,9 +23,17 @@
   }
 
   @else if (invoices.length === 0) {
-  <div class="flex flex-col justify-center items-center gap-10 py-12">
-    <p class="text-sm opacity-50" [innerHTML]="account_literal"></p>
-    <button class="btn btn-success" (click)="onCreateInvoice()">
+  <div class="flex flex-col justify-center items-center gap-1 py-12">
+    <fa-icon [icon]="faFileInvoiceDollar" class="text-9xl text-gray-300"
+      [@fadeInDown]="{ value: '', params: { delay: '0ms' } }"></fa-icon>
+    <div class="my-4 flex flex-col items-center gap-2 text-center"
+      [@fadeInDown]="{ value: '', params: { delay: '50ms' } }">
+      <span [innerHTML]="account_literal"></span>
+      <span class="text-sm opacity-50 max-w-xl">Crea facturas fácilmente, sin complicaciones, y solicita tus pagos de
+        manera rápida y sencilla.</span>
+    </div>
+    <button class="btn btn-success" (click)="onCreateInvoice()"
+      [@fadeInDown]="{ value: '', params: { delay: '100ms' } }">
       <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
       Nueva factura
     </button>
@@ -64,67 +72,66 @@
 
 
 
-    <table class="table border border-t-[var(--border-table-color)]">
-      <thead>
-        <tr>
-          <th><span class="opacity-50">ID</span></th>
-          <th>Cuenta</th>
-          <th>Fecha</th>
-          <th>Tarifa por día</th>
-          <th>Días</th>
-          <th>Total</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (invoice of invoices; track invoice) {
-        <tr>
-          <td>
-            <span class="opacity-50">{{ invoice.invoice_id_short | uppercase }}</span>
-            <span class="sr-only">id de cuenta: {{ invoice.invoice_id_short }}</span>
-          </td>
-          <td>
-            <span class="opacity-50">{{ invoice.account_alias }}</span>
-            <span class="sr-only">Nombre del cliente: {{ invoice.account_alias }}</span>
-          </td>
-          <td>
-            <span class="opacity-50">{{ invoice.submited_at | date: 'dd-MM-yyyy' }}</span>
-            <span class="sr-only">Fecha de envío: {{ invoice.submited_at | date: 'dd-MM-yyyy' }}</span>
-          </td>
-          <td>
-            <span class="opacity-50">{{ invoice.rate }} €</span>
-            <span class="sr-only">Tarifa por día: {{ invoice.rate }} euros</span>
-          </td>
-          <td>
-            <span class="opacity-50">{{ invoice.days }}</span>
-            <span class="sr-only">Dias: {{ invoice.days }}</span>
-          </td>
-          <td>
-            <span class="opacity-50">{{ invoice.total }} €</span>
-            <span class="sr-only">Total factura: {{ invoice.total }} euros</span>
-          </td>
-          <th>
-            <div class="tooltip" data-tip="Ver detalles">
-              <button class="btn btn-ghost btn-xs" (click)="onViewInvoiceDetails(invoice.invoice_id_short)">
-                <fa-icon [icon]="faEye"></fa-icon>
-                <span class="sr-only">Ver detalles</span>
-              </button>
-              <!-- <div class="tooltip" data-tip="Descargar factura">
+  <table class="table border border-t-[var(--border-table-color)]">
+    <thead>
+      <tr>
+        <th><span class="opacity-50">ID</span></th>
+        <th>Cuenta</th>
+        <th>Fecha</th>
+        <th>Tarifa por día</th>
+        <th>Días</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (invoice of invoices; track invoice) {
+      <tr>
+        <td>
+          <span class="opacity-50">{{ invoice.invoice_id_short | uppercase }}</span>
+          <span class="sr-only">id de cuenta: {{ invoice.invoice_id_short }}</span>
+        </td>
+        <td>
+          <span class="opacity-50">{{ invoice.account_alias }}</span>
+          <span class="sr-only">Nombre del cliente: {{ invoice.account_alias }}</span>
+        </td>
+        <td>
+          <span class="opacity-50">{{ invoice.submited_at | date: 'dd-MM-yyyy' }}</span>
+          <span class="sr-only">Fecha de envío: {{ invoice.submited_at | date: 'dd-MM-yyyy' }}</span>
+        </td>
+        <td>
+          <span class="opacity-50">{{ invoice.rate }} €</span>
+          <span class="sr-only">Tarifa por día: {{ invoice.rate }} euros</span>
+        </td>
+        <td>
+          <span class="opacity-50">{{ invoice.days }}</span>
+          <span class="sr-only">Dias: {{ invoice.days }}</span>
+        </td>
+        <td>
+          <span class="opacity-50">{{ invoice.total }} €</span>
+          <span class="sr-only">Total factura: {{ invoice.total }} euros</span>
+        </td>
+        <th>
+          <div class="tooltip" data-tip="Ver detalles">
+            <button class="btn btn-ghost btn-xs" (click)="onViewInvoiceDetails(invoice.invoice_id_short)">
+              <fa-icon [icon]="faEye"></fa-icon>
+              <span class="sr-only">Ver detalles</span>
+            </button>
+            <!-- <div class="tooltip" data-tip="Descargar factura">
                 <button class="btn btn-ghost btn-xs" (click)="downloadPDF(invoice)">
                   <fa-icon [icon]="faDownload"></fa-icon>
                   <span class="sr-only">Descargar factura</span>
                 </button>
               </div> -->
-            </div>
-          </th>
-        </tr>
-        }
-      </tbody>
-    </table>
+          </div>
+        </th>
+      </tr>
+      }
+    </tbody>
+  </table>
   }
 </div>
 
 <div #invoiceContainer class="hidden-pdf-content">
   <app-invoice-template [inputData]="invoiceData"></app-invoice-template>
 </div>
-

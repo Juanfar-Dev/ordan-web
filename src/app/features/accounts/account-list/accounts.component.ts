@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
+import { fadeInDown } from '../../../core/animations/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus, faEye, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEye, faFileInvoiceDollar, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { AccountsService } from '../accounts.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +11,8 @@ import { DefaultAvatarComponent } from '../../../shared/components/default-avata
   selector: 'app-accounts',
   imports: [FontAwesomeModule, CommonModule, NgOptimizedImage, DefaultAvatarComponent],
   templateUrl: './accounts.component.html',
-  styleUrl: './accounts.component.css'
+  styleUrl: './accounts.component.css',
+  animations: [fadeInDown]
 })
 export class AccountsComponent {
   public route = inject(ActivatedRoute);
@@ -20,6 +22,7 @@ export class AccountsComponent {
   faPlus = faPlus;
   faEye = faEye;
   faFileInvoiceDollar = faFileInvoiceDollar;
+  faBuilding = faBuilding;
   // public accounts$ = this.accountsService.getMockAccounts();
   public isLoading = false;
   public accounts$ = this.accountsService.getAccounts();

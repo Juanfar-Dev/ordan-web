@@ -21,9 +21,19 @@
   }
 
   @else if (accounts.length === 0) {
-  <div class="flex flex-col justify-center items-center gap-10 py-12">
-    <p class="text-sm opacity-50">No hay cuentas disponibles</p>
-     <button class="btn btn-success" (click)="onCreateAccount()">
+  <div class="flex flex-col justify-center items-center gap-1 py-12">
+
+    <fa-icon [icon]="faBuilding" class="text-9xl text-gray-300"
+      [@fadeInDown]="{ value: '', params: { delay: '0ms' } }"></fa-icon>
+    <div class="my-4 flex flex-col items-center gap-2 text-center"
+      [@fadeInDown]="{ value: '', params: { delay: '150ms' } }">
+      <span>No hay cuentas disponibles</span>
+      <span class="text-sm opacity-50 max-w-xl">Crea facturas fácilmente, sin complicaciones, y solicita tus pagos de
+        manera rápida y sencilla.</span>
+    </div>
+
+    <button class="btn btn-success" (click)="onCreateAccount()"
+      [@fadeInDown]="{ value: '', params: { delay: '250ms' } }">
       <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
       Nueva cuenta
     </button>

@@ -1,10 +1,12 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { fadeInDown } from '../../../core/animations/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faPlus,
   faEye,
   faPencil,
   faDownload,
+  faFileInvoiceDollar
 } from '@fortawesome/free-solid-svg-icons';
 import { InvoicesService } from '../invoices.service';
 import { CommonModule } from '@angular/common';
@@ -20,6 +22,7 @@ import { map, switchMap } from 'rxjs';
   imports: [FontAwesomeModule, CommonModule, InvoiceTemplateComponent],
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.css',
+  animations: [fadeInDown]
 })
 export class InvoicesComponent {
   public route = inject(ActivatedRoute);
@@ -31,6 +34,7 @@ export class InvoicesComponent {
   faEye = faEye;
   faPencil = faPencil;
   faDownload = faDownload;
+  faFileInvoiceDollar = faFileInvoiceDollar;
   public account_literal = 'No hay facturas disponibles.';
   // public invoices$ = this.invoicesService.getMockInvoices();
   public invoices$ = this.route.queryParamMap.pipe(
