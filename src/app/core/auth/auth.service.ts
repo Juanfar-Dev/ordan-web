@@ -44,5 +44,14 @@ export class AuthService {
   async signout() {
     return await this.SupabaseClient.auth.signOut();
   }
+
+  async updateProfile(profileData: Partial<Profile>) {
+    const user = this.SupabaseClient.auth.getUser();
+    if (!user) throw new Error('No user logged in');
+
+    return await this.SupabaseClient.auth.updateUser({
+      data: profileData
+    });
+  }
 }
 
