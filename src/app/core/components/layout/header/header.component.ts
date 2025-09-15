@@ -18,8 +18,24 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
-  public user$: Observable<string | null> = this.authService.getUser().pipe(
-    map((user) => user ? `${user.name} ${user.surname}` : ''),
+  public theme: string | null = document.documentElement.getAttribute('data-theme');
+
+  constructor() {
+    const observer = new MutationObserver(() => {
+      this.theme = document.documentElement.getAttribute('data-theme');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+
+  public user$: Observable<{ name: string; letters: string } | null> = this.authService.getUser().pipe(
+    map((user) =>
+      user
+        ? {
+            name: `${user.name} ${user.surname}`,
+            letters: `${user.name.charAt(0)}${user.surname.charAt(0)}`,
+          }
+        : null
+    ),
     shareReplay(1)
   );
 
@@ -39,3 +55,4 @@ export class HeaderComponent {
     }
   }
 }
+
