@@ -9,6 +9,7 @@ import { AccountsService } from '../accounts.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NewAccount } from '../account';
 import { NotificationService } from '../../../shared/services/notification/notification.service';
+import { UtilsService } from '../../../shared/services/utils/utils.service';
 
 @Component({
   selector: 'app-account-form',
@@ -20,6 +21,7 @@ export class AccountFormComponent {
   public route = inject(ActivatedRoute);
   public accountForm!: FormGroup;
   private accountService = inject(AccountsService);
+  private utilsService = inject(UtilsService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   public selectedFile: File | null = null;
@@ -36,7 +38,7 @@ export class AccountFormComponent {
     this.initForm();
     if (this.route.snapshot.paramMap.get('id')) {
       await this.getAccountByIdShort(this.route.snapshot.paramMap.get('id')!);
-      this.matchedData = this.areObjectsEqual(
+      this.matchedData = this.utilsService.areObjectsEqual(
         this.accountForm.value,
         this.accountPreview
       );
@@ -58,7 +60,7 @@ export class AccountFormComponent {
 
   formEvents() {
     this.accountForm.valueChanges.subscribe((value) => {
-      this.matchedData = this.areObjectsEqual(
+      this.matchedData = this.utilsService.areObjectsEqual(
         this.accountForm.value,
         this.accountPreview
       );
@@ -122,11 +124,4 @@ export class AccountFormComponent {
       relativeTo: this.router.routerState.root.firstChild,
     });
   }
-
-  private areObjectsEqual = (obj1: NewAccount, obj2: NewAccount) => {
-    // The key order must be consistent for this to work correctly.
-    const json1 = JSON.stringify(obj1);
-    const json2 = JSON.stringify(obj2);
-    return json1 === json2;
-  };
 }

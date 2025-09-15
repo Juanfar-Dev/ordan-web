@@ -1,1 +1,93 @@
-<p>profile works!</p>
+<form [formGroup]="profileForm" autocomplete="off" class="flex flex-col items-center justify-center" novalidate>
+  <h2 class="text-base/7 font-semibold">Datos del perfil</h2>
+      <p class="mt-1 text-sm/6 text-gray-400">Actualiza tu información personal</p>
+
+  <div class="mt-10 flex flex-wrap gap-8 justify-center">
+    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
+      <legend class="fieldset-legend">Nombre</legend>
+      <label class="input validator w-full">
+        <input type="text" formControlName="name" required />
+      </label>
+      @if (profileForm.get('name')?.invalid) {
+      <p class="validator-hint py-0 my-0">Campo requerido</p>
+      }
+    </fieldset>
+
+    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
+      <legend class="fieldset-legend">Apellidos</legend>
+      <label class="input validator w-full">
+        <input type="text" formControlName="surname" required />
+      </label>
+      @if (profileForm.get('surname')?.errors?.['required'] === true) {
+      <p class="validator-hint py-0 my-0">Campo requerido</p>
+      }
+    </fieldset>
+
+    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
+      <legend class="fieldset-legend">Correo Electrónico</legend>
+      <label class="input validator w-full">
+        <input type="email" formControlName="email" required />
+      </label>
+      @if (profileForm.get('email')?.errors?.['required'] === true) {
+      <p class="validator-hint py-0 my-0">Campo requerido</p>
+      } @else {
+      <p class="validator-hint py-0 my-0">Correo electrónico inválido</p>
+      }
+    </fieldset>
+
+    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
+      <legend class="fieldset-legend">Dirección</legend>
+      <label class="input validator w-full">
+        <input type="text" formControlName="address" required />
+      </label>
+      @if (profileForm.get('address')?.errors?.['required'] === true) {
+      <p class="validator-hint py-0 my-0">Campo requerido</p>
+      }
+    </fieldset>
+
+    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
+      <legend class="fieldset-legend">Teléfono</legend>
+      <label class="input validator w-full">
+        <input type="tel" pattern="^\d{9}$" formControlName="phone"
+          title="Teléfono inválido: debe contener 9 dígitos (ejemplo: 612345678)" required />
+      </label>
+      @if (profileForm.get('phone')?.errors?.['required'] === true) {
+      <p class="validator-hint py-0 my-0">Campo requerido</p>
+      } @else {
+      <p class="validator-hint py-0 my-0">Teléfono inválido: debe contener 9 dígitos</p>
+      }
+    </fieldset>
+
+    <fieldset class="fieldset w-full sm:w-fit min-w-1/3">
+      <legend class="fieldset-legend">NIF</legend>
+      <label class="input validator w-full">
+        <input type="text" formControlName="nif" pattern="^[A-Z0-9]{9}$" required />
+      </label>
+      @if (profileForm.get('nif')?.errors?.['required'] === true) {
+      <p class="validator-hint py-0 my-0">Campo requerido</p>
+      } @else {
+      <p class="validator-hint py-0 my-0">NIF inválido: debe contener 9 caracteres</p>
+      <p class="validator-hint py-0 my-0">ejemplo: 12345678Z</p>
+      }
+    </fieldset>
+
+  </div>
+
+</form>
+<div class="flex justify-center gap-2 mt-6">
+    <button class="btn btn-primary" (click)="onUpdateProfile()" [disabled]="matchedData">
+      @if (isLoading === false) {
+      Guardar Cambios
+      } @else {
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <span class="loading loading-spinner"></span>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      }
+    </button>
+  </div>
