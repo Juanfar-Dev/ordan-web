@@ -6,10 +6,11 @@ import { AuthService } from '../../../core/auth/auth.service';
 import { AccountsService } from '../../accounts/accounts.service';
 import { faThumbsDown, faThumbsUp, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-invoice-template',
-  imports: [FontAwesomeModule],
+  imports: [CurrencyPipe, FontAwesomeModule],
   templateUrl: './invoice-template.component.html',
   styleUrl: './invoice-template.component.css',
 })

@@ -67,19 +67,19 @@
         </tr>
         <tr>
           <td colspan="4" class="border px-4 py-2 text-right">Subtotal</td>
-          <td class="border px-4 py-2 text-right">{{invoiceData?.subtotal}} €</td>
+          <td class="border px-4 py-2 text-right">{{invoiceData?.subtotal | currency}} €</td>
         </tr>
         <tr>
           <td colspan="4" class="border px-4 py-2 text-right">VAT/IVA: {{inputData?.iva_percent}}%</td>
-          <td class="border px-4 py-2 text-right">{{invoiceData?.subtotal_with_iva}} €</td>
+          <td class="border px-4 py-2 text-right">{{invoiceData?.iva_amount | currency}} €</td>
         </tr>
         <tr>
           <td colspan="4" class="border px-4 py-2 text-right">Retención IRPF: {{inputData?.irpf_percent}}%</td>
-          <td class="border px-4 py-2 text-right">{{invoiceData?.irpf_amount}} €</td>
+          <td class="border px-4 py-2 text-right">{{invoiceData?.irpf_amount | currency}} €</td>
         </tr>
         <tr class="font-bold">
           <td colspan="4" class="border px-4 py-2 text-right">Total a Pagar</td>
-          <td class="border px-4 py-2 text-right">{{invoiceData?.total}} €</td>
+          <td class="border px-4 py-2 text-right">{{invoiceData?.total | currency}} €</td>
         </tr>
       </table>
     </div>
