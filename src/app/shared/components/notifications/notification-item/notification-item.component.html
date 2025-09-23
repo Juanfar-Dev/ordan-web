@@ -1,10 +1,8 @@
-<div class="toast toast-top mt-12 mr-4 fixed z-50" *ngIf="notifications$ | async as notifications">
-  @for (notification of (notifications$ | async); track $index) {
-  <div [@fadeInOut] [ngClass]="{
+<div [ngClass]="{
         'alert-success': notification.style === 'success',
         'alert-error': notification.style === 'error',
         'alert-info': notification.style === 'info'
-      }" class="mb-2 alert relative shadow-lg">
+      }" class="mb-2 alert relative shadow-lg notification">
     @if(notification.style === 'success') {
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -23,7 +21,7 @@
     }
     <span [innerHTML]="notification.message"></span>
 
-    <button (click)="removeNotification($index)" class="cursor-pointer">
+    <button (click)="removeNotification()" class="cursor-pointer">
       <div [ngClass]="{
         'bg-emerald-400 text-emerald-900': notification.style === 'success',
         'bg-rose-400 text-rose-900': notification.style === 'error',
@@ -38,5 +36,3 @@
       </div>
     </button>
   </div>
-  }
-</div>

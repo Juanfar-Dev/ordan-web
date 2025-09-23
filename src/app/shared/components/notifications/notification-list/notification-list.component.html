@@ -1,0 +1,10 @@
+<ul class="toast toast-top mt-16 mr-4 fixed z-50">
+  @for (notification of (notifications$ | async); track $index) {
+    <li class="notification-item">
+      <app-notification-item
+        [notification]="notification"
+        (remove)="eliminar(notification)"
+      ></app-notification-item>
+    </li>
+  }
+</ul>
