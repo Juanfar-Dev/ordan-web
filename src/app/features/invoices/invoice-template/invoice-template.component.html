@@ -44,16 +44,14 @@
           <th class="px-4 py-2 text-left">Cantidad</th>
           <th class="px-4 py-2 text-left">Tarifa</th>
           <th class="px-4 py-2 text-left">Importe</th>
-          <th class="px-4 py-2 text-left">Subotal</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="border px-4 py-2">{{invoiceData?.account?.job_role}}</td>
+          <td class="border px-4 py-2 w-[400px]">{{invoiceData?.account?.job_role}}</td>
           <td class="border px-4 py-2">{{invoiceData?.days}}</td>
           <td class="border px-4 py-2">{{invoiceData?.rate}}</td>
           <td class="border px-4 py-2">{{invoiceData?.subtotal}} €</td>
-          <td class="border px-4 py-2 text-right">{{invoiceData?.subtotal}} €</td>
         </tr>
 
       </tbody>
