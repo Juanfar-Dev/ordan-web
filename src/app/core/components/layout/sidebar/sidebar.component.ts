@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
@@ -17,15 +17,7 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-  isDarkMode = false;
-  isMenuOpen = false;
-  isMobile = true;
-  itemMenuVisible = true;
-  faGear = faGear;
-  faUser = faUser;
-  faCircleUser = faCircleUser;
-  faRightFromBracket = faRightFromBracket;
-
+  private router = inject(Router);
   private authService = inject(AuthService);
   public theme: string | null =
     document.documentElement.getAttribute('data-theme');
@@ -42,6 +34,15 @@ export class SidebarComponent implements OnInit {
       ),
       shareReplay(1)
     );
+
+  isDarkMode = false;
+  isMenuOpen = false;
+  isMobile = true;
+  itemMenuVisible = true;
+  faGear = faGear;
+  faUser = faUser;
+  faCircleUser = faCircleUser;
+  faRightFromBracket = faRightFromBracket;
 
   constructor(private themeService: ThemeService) {}
 
@@ -96,6 +97,17 @@ export class SidebarComponent implements OnInit {
       body.style.overflow = 'hidden'; // Evita el desplazamiento del cuerpo
     } else {
       body.style.overflow = 'auto'; // Restaura el desplazamiento del cuerpo
+    }
+  }
+
+  async signOut() {
+    try {
+      await this.authService.signout();
+      localStorage.removeItem('user');
+      localStorage.removeItem('session');
+      this.router.navigate(['/auth/signin']);
+    } catch (error) {
+      console.error('Error during sign out:', error);
     }
   }
 }

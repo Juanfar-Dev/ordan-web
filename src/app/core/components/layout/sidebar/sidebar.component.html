@@ -147,19 +147,19 @@
         <span class="">{{ (user$ | async)?.letters }}</span>
       </div>
       <ul class="menu menu-xs border-l-2 border-solid border-neutral-200 pl-4">
-        <li [routerLink]="['/home/profile']" routerLinkActive="active">
+        <li [routerLink]="['/home/profile']" routerLinkActive="active" (click)="onToggleMenu()">
           <a>
             <fa-icon [icon]="faUser"></fa-icon>
             Perfil
           </a>
         </li>
-        <li routerLink="/home/settings" routerLinkActive="active">
+        <li routerLink="/home/settings" routerLinkActive="active" (click)="onToggleMenu()">
           <a>
             <fa-icon [icon]="faGear"></fa-icon>
             Ajustes
           </a>
         </li>
-        <li>
+        <li (click)="signOut()">
           <a>
             <fa-icon [icon]="faRightFromBracket"></fa-icon>
             Salir
