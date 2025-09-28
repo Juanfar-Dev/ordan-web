@@ -40,15 +40,15 @@
   </div>
   }
   @else {
-  <div class="flex justify-between items-end px-4 pt-4 pb-6">
-    <fieldset class="fieldset p-0">
+  <div class="flex justify-between flex-wrap items-end px-4 pt-4 pb-6">
+    <fieldset class="fieldset p-0 w-full md:w-1/4">
       <legend class="fieldset-legend">Ordenar por:</legend>
       <select class="select">
         <option>Factura más reciente</option>
         <option>Factura más antigua</option>
       </select>
     </fieldset>
-    <fieldset class="fieldset p-0">
+    <fieldset class="fieldset p-0 w-full md:w-1/3">
       <legend class="fieldset-legend">Buscar</legend>
       <label class="input">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -63,7 +63,7 @@
       </label>
     </fieldset>
 
-    <button class="btn btn-outline btn-success" (click)="onCreateInvoice()">
+    <button class="btn btn-outline btn-success btn-block mt-6 md:mt-0 md:w-1/4" (click)="onCreateInvoice()">
       <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
       Nueva factura
     </button>
