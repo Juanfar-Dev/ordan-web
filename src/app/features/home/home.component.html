@@ -1,13 +1,11 @@
-<div class="flex relative w-full h-screen">
-  <app-sidebar></app-sidebar>
+<div class="flex relative w-full">
+  <app-header class="z-50"></app-header>
+  <app-sidebar class="z-50"></app-sidebar>
   <main class="w-full">
-    <app-header></app-header>
-    <div class="px-6 py-2">
+    <div class="md:pl-62 pl-6 pr-6 md:pt-24 pt-20 pb-2">
       <app-breadcrumb></app-breadcrumb>
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </main>
 </div>
-
-
 

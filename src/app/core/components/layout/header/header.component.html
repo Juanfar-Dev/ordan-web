@@ -1,5 +1,5 @@
 <header class="mb-2">
-  <div class="navbar bg-base-200">
+  <div class="navbar bg-base-200 fixed top-0 left-0 right-0">
     <div class="ps-4">
       <a class="text-lg font-bold"></a>
     </div>
@@ -21,7 +21,7 @@
             </div>
           </div>
 
-          <ul tabindex="0" class="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
+          <ul tabindex="0" class="menu dropdown-content bg-base-200 rounded-box mt-4 w-52 p-2 shadow-sm">
             <li class="menu-title">
               <span>{{ (user$ | async)?.name }}</span>
             </li>
