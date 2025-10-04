@@ -69,9 +69,6 @@
     </button>
   </div>
 
-
-
-
   <table class="table border border-t-[var(--border-table-color)]">
     <thead>
       <tr>
@@ -112,26 +109,31 @@
           <span class="sr-only">Total factura: {{ invoice.total }} euros</span>
         </td>
         <th>
-          <div class="tooltip" data-tip="Ver detalles">
+          <div class="tooltip" data-tip="Editar factura">
             <button class="btn btn-ghost btn-xs" (click)="onViewInvoiceDetails(invoice.invoice_id_short)">
-              <fa-icon [icon]="faEye"></fa-icon>
-              <span class="sr-only">Ver detalles</span>
+              <fa-icon [icon]="faPenToSquare"></fa-icon>
+              <span class="sr-only">Editar factura</span>
             </button>
-            <!-- <div class="tooltip" data-tip="Descargar factura">
-                <button class="btn btn-ghost btn-xs" (click)="downloadPDF(invoice)">
-                  <fa-icon [icon]="faDownload"></fa-icon>
-                  <span class="sr-only">Descargar factura</span>
-                </button>
-              </div> -->
+          </div>
+          <div class="tooltip" data-tip="Ver factura">
+            <button class="btn btn-ghost btn-xs" onclick="invoice_modal.showModal()">
+              <fa-icon [icon]="faEye"></fa-icon>
+              <span class="sr-only">Ver factura</span>
+            </button>
           </div>
         </th>
       </tr>
+      <dialog id="invoice_modal" class="modal modal-end" #invoice_modal>
+        <div class="modal-box">
+          <h3 class="font-bold text-lg">Vista previa de la factura</h3>
+          <app-invoice-template [type]="'preview'" [inputData]="invoice"
+            (outputData)="onOutputData($event)"></app-invoice-template>
+          <div class="modal-action">
+          </div>
+        </div>
+      </dialog>
       }
     </tbody>
   </table>
   }
-</div>
-
-<div #invoiceContainer class="hidden-pdf-content">
-  <app-invoice-template [inputData]="invoiceData"></app-invoice-template>
 </div>
