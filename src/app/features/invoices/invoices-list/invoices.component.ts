@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { fadeInDown } from '../../../core/animations/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -49,7 +49,8 @@ export class InvoicesComponent {
     })
   );
 
-  @ViewChild('invoice_modal') invoiceModal!: ElementRef;
+  @ViewChildren('invoice_modal') invoiceModals!: QueryList<ElementRef<HTMLDialogElement>>;
+
 
   onCreateInvoice() {
     this.router.navigate(['new-invoice'], { relativeTo: this.route });
@@ -61,7 +62,9 @@ export class InvoicesComponent {
     });
   }
 
-  onOutputData(event: { feedback: string; data?: any }) {
-    this.invoiceModal.nativeElement.close();
+  onOutputData(event: { feedback: string; data?: any }, index: number) {
+    const dlg = this.invoiceModals.toArray()[index];
+    dlg?.nativeElement.close();
+
   }
 }

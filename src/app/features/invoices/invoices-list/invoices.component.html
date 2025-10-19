@@ -82,9 +82,9 @@
       </tr>
     </thead>
     <tbody>
-      @for (invoice of invoices; track invoice) {
+      @for (invoice of invoices; track invoice; let index = $index) {
       <tr>
-        <td>
+          <td>
           <span class="opacity-50">{{ invoice.invoice_id_short | uppercase }}</span>
           <span class="sr-only">id de cuenta: {{ invoice.invoice_id_short }}</span>
         </td>
@@ -108,7 +108,7 @@
           <span class="opacity-50">{{ invoice.total }} €</span>
           <span class="sr-only">Total factura: {{ invoice.total }} euros</span>
         </td>
-        <th>
+      <th>
           <div class="tooltip" data-tip="Editar factura">
             <button class="btn btn-ghost btn-xs" (click)="onViewInvoiceDetails(invoice.invoice_id_short)">
               <fa-icon [icon]="faPenToSquare"></fa-icon>
@@ -116,18 +116,18 @@
             </button>
           </div>
           <div class="tooltip" data-tip="Ver factura">
-            <button class="btn btn-ghost btn-xs" onclick="invoice_modal.showModal()">
+            <button class="btn btn-ghost btn-xs" (click)="invoice_modal.showModal()">
               <fa-icon [icon]="faEye"></fa-icon>
               <span class="sr-only">Ver factura</span>
             </button>
           </div>
         </th>
       </tr>
-      <dialog id="invoice_modal" class="modal modal-end" #invoice_modal>
+      <dialog id="invoice_modal_{{ index }}" class="modal modal-end" #invoice_modal>
         <div class="modal-box">
           <h3 class="font-bold text-lg">Vista previa de la factura</h3>
           <app-invoice-template [type]="'preview'" [inputData]="invoice"
-            (outputData)="onOutputData($event)"></app-invoice-template>
+            (outputData)="onOutputData($event, index)"></app-invoice-template>
           <div class="modal-action">
           </div>
         </div>
